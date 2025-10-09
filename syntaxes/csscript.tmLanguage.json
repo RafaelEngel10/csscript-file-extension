@@ -16,15 +16,15 @@
     },
     {
       "name": "keyword.control.event.cssc",
-      "match": "\\b(window\\.onLoad|onHover|onClick|ScrollReveal|onFocus|onBlur)\\b"
+      "match": "\\b(window\\.onLoad|on[A-Z][a-zA-Z]+|ScrollReveal|)\\b"
     },
     {
       "name": "support.constant.property-name.cssc",
-      "match": "\\b(background-color|text|opacity|scale|transform)\\b"
+      "match": "\\b(background-color|text|origin|duration|distance|opacity|scale|transform|delay|easing)\\b"
     },
     {
       "name": "support.function.animation.cssc",
-      "match": "\\b(fadeIn|fadeOut|slideIn|slideOut|fall|rise|zoomIn|zoomOut)\\b"
+      "match": "\\b(fadeIn|fadeOut|slideIn|slideOut|fall|rise|zoomIn|zoomOut|reveal|pop|shake)\\b"
     },
     {
       "name": "comment.line.double-slash.cssc",

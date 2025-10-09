@@ -2,37 +2,76 @@
   "name": "CSScript Theme",
   "type": "dark",
   "colors": {
-    "editor.foreground": "#E0E0E0",
-    "editor.background": "#0B0F14"
+    "editor.foreground": "#D4D4D4",
+    "editor.background": "#1E1E1E"
   },
   "tokenColors": [
     {
+      // Elements (div, p, etc.)
       "scope": "entity.name.tag.cssc",
-      "settings": { "foreground": "#61afef", "fontStyle": "bold" }
+      "settings": {
+        "foreground": "#569CD6", // azul VSCode padrão
+        "fontStyle": "bold"
+      }
     },
     {
+      // Class (.classe)
       "scope": "entity.other.attribute-name.class.cssc",
-      "settings": { "foreground": "#98c379" }
+      "settings": {
+        "foreground": "#D7BA7D" // amarelo dourado
+      }
     },
     {
+      // IDs (#id)
       "scope": "entity.other.attribute-name.id.cssc",
-      "settings": { "foreground": "#e06c75" }
+      "settings": {
+        "foreground": "#9CDCFE" // azul claro
+      }
     },
     {
+      // Events (window.onLoad, onClick, ScrollReveal, etc.)
       "scope": "keyword.control.event.cssc",
-      "settings": { "foreground": "#c678dd", "fontStyle": "italic" }
+      "settings": {
+        "foreground": "#C586C0", // roxo claro
+        "fontStyle": "italic"
+      }
     },
     {
+      // Parameters and properties (text, background-color, origin, etc.)
       "scope": "support.constant.property-name.cssc",
-      "settings": { "foreground": "#c23b1a" }
+      "settings": {
+        "foreground": "#4FC1FF" // azul ciano claro
+      }
     },
     {
+      // Functions/animations (fall, fadeIn, rise, etc.)
       "scope": "support.function.animation.cssc",
-      "settings": { "foreground": "#d19a66" }
+      "settings": {
+        "foreground": "#FFD700", // amarelo claro vibrante
+        "fontStyle": "bold"
+      }
     },
     {
-      "scope": "comment.cssc",
-      "settings": { "foreground": "#5c6370", "fontStyle": "italic" }
+      // Comments
+      "scope": [
+        "comment.line.double-slash.cssc",
+        "comment.block.cssc"
+      ],
+      "settings": {
+        "foreground": "#6A9955",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      // Punctuation, braces, and delimiters
+      "scope": [
+        "punctuation.definition.block.cssc",
+        "punctuation.section.block.begin.cssc",
+        "punctuation.section.block.end.cssc"
+      ],
+      "settings": {
+        "foreground": "#D4D4D4"
+      }
     }
   ]
 }

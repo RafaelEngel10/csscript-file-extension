@@ -1,7 +1,5 @@
 #titulo-principal {
-    ScrollReveal {
-        origin: left;
-        duration: 1000;
-        distance: 20%;
-    };
+    window.onLoad {
+        text: fall(600ms);
+    }
 }
