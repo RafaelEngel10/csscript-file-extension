@@ -10,7 +10,7 @@
       // Elements (div, p, etc.)
       "scope": "entity.name.tag.cssc",
       "settings": {
-        "foreground": "#569CD6", // azul VSCode padrão
+        "foreground": "#569CD6", 
         "fontStyle": "bold"
       }
     },
@@ -18,21 +18,21 @@
       // Class (.classe)
       "scope": "entity.other.attribute-name.class.cssc",
       "settings": {
-        "foreground": "#D7BA7D" // amarelo dourado
+        "foreground": "#D7BA7D" 
       }
     },
     {
       // IDs (#id)
       "scope": "entity.other.attribute-name.id.cssc",
       "settings": {
-        "foreground": "#9CDCFE" // azul claro
+        "foreground": "#9CDCFE" 
       }
     },
     {
       // Events (window.onLoad, onClick, ScrollReveal, etc.)
       "scope": "keyword.control.event.cssc",
       "settings": {
-        "foreground": "#C586C0", // roxo claro
+        "foreground": "#C586C0", 
         "fontStyle": "italic"
       }
     },
@@ -40,14 +40,14 @@
       // Parameters and properties (text, background-color, origin, etc.)
       "scope": "support.constant.property-name.cssc",
       "settings": {
-        "foreground": "#4FC1FF" // azul ciano claro
+        "foreground": "#4FC1FF",
       }
     },
     {
       // Functions/animations (fall, fadeIn, rise, etc.)
       "scope": "support.function.animation.cssc",
       "settings": {
-        "foreground": "#FFD700", // amarelo claro vibrante
+        "foreground": "#FFD700",
         "fontStyle": "bold"
       }
     },

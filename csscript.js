@@ -115,39 +115,58 @@
     return blocks;
   }
 
+
+
   /********** animations **********/
+  function animateFrom(el, initialTransform, durationMs) {
+    ensureInlineBlockIfNeeded(el);
+
+  // estado inicial (sem transition)
+    el.style.transition = 'none';
+    el.style.transform = initialTransform;
+    el.style.opacity = '0';
+
+  // força reflow para garantir que o browser registre o estado inicial
+    void el.offsetWidth;
+
+  // calcula transform final baseado no tipo (translateX/translateY)
+    let finalTransform = 'translate(0, 0)';
+    const m = initialTransform.match(/translate([XY])\s*\([^)]+\)/i);
+    if (m) {
+      finalTransform = m[1].toUpperCase() === 'X' ? 'translateX(0)' : 'translateY(0)';
+    }
+
+  // aplica a transição (depois do reflow)
+    el.style.transition = `transform ${durationMs}ms ease, opacity ${durationMs}ms ease`;
+
+  // no próximo frame manda para o estado final (isso dispara a animação)
+    requestAnimationFrame(() => {
+      el.style.transform = finalTransform;
+      el.style.opacity = '1';
+    });
+  }
+
   const animations = {
     fall: (el, arg) => {
       const duration = toMs(arg);
-      ensureInlineBlockIfNeeded(el);
-      // initial state
-      el.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
-      el.style.transform = el.style.transform || 'translateY(-30px)';
-      el.style.opacity = el.style.opacity || '0';
-      // force reflow then animate
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        el.style.transform = 'translateY(0)';
-        el.style.opacity = '1';
-      }));
+    // começa acima e vem para o lugar
+      animateFrom(el, 'translateY(-30px)', duration);
     },
+
     rise: (el, arg) => {
       const duration = toMs(arg);
-      ensureInlineBlockIfNeeded(el);
-      el.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
-      el.style.transform = el.style.transform || 'translateY(30px)';
-      el.style.opacity = el.style.opacity || '0';
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        el.style.transform = 'translateY(0)';
-        el.style.opacity = '1';
-      }));
+    // começa abaixo e sobe para o lugar
+      animateFrom(el, 'translateY(30px)', duration);
     },
+
     fadeIn: (el, arg) => {
       const duration = toMs(arg);
+    // fade simples
+      el.style.transition = 'none';
+      el.style.opacity = '0';
+      void el.offsetWidth;
       el.style.transition = `opacity ${duration}ms ease`;
-      el.style.opacity = el.style.opacity || '0';
-      requestAnimationFrame(() => {
-        el.style.opacity = '1';
-      });
+      requestAnimationFrame(() => (el.style.opacity = '1'));
     }
   };
 
@@ -196,6 +215,7 @@
     revelar(); // já chama 1x se o elemento está visível
   });
   } 
+
 
   function parseAnimString(s) {
     // exemplo: fall(600ms) ou fall
