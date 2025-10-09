@@ -144,22 +144,60 @@
       el.style.transform = finalTransform;
       el.style.opacity = '1';
     });
+
+    requestAnimationFrameAside(() => {
+      el.style.transform = finalTransform;
+      el.style.opacity = '0';
+    })
   }
 
   const animations = {
-    fall: (el, arg) => {
-      const duration = toMs(arg);
-    // começa acima e vem para o lugar
-      animateFrom(el, 'translateY(-30px)', duration);
-    },
 
-    rise: (el, arg) => {
-      const duration = toMs(arg);
-    // começa abaixo e sobe para o lugar
-      animateFrom(el, 'translateY(30px)', duration);
-    },
+  fall: (el, arg) => {
+    const duration = toMs(arg);
+    ensureInlineBlockIfNeeded(el);
 
-    fadeIn: (el, arg) => {
+  // estado inicial (sem transition)
+    el.style.transition = 'none';
+    el.style.transform = 'translateY(-30px)';
+    el.style.opacity = '0';
+
+  // força reflow para garantir que o browser registre o estado inicial
+    void el.offsetWidth;
+
+  // aplica a transição (depois do reflow)
+    el.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
+
+  // dispara a animação no próximo frame
+    requestAnimationFrame(() => {
+      el.style.transform = 'translateY(0)';
+      el.style.opacity = '1';
+    });
+  },
+
+  rise: (el, arg) => {
+    const duration = toMs(arg);
+    ensureInlineBlockIfNeeded(el);
+
+  // estado inicial (sem transition)
+    el.style.transition = 'none';
+    el.style.transform = 'translateY(30px)';
+    el.style.opacity = '0';
+
+  // força reflow para garantir que o browser registre o estado inicial
+    void el.offsetWidth;
+
+  // aplica a transição (depois do reflow)
+    el.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
+
+  // dispara a animação no próximo frame
+    requestAnimationFrame(() => {
+      el.style.transform = 'translateY(0)';
+      el.style.opacity = '1';
+    });
+  },
+
+  fadeIn: (el, arg) => {
       const duration = toMs(arg);
     // fade simples
       el.style.transition = 'none';
@@ -167,9 +205,188 @@
       void el.offsetWidth;
       el.style.transition = `opacity ${duration}ms ease`;
       requestAnimationFrame(() => (el.style.opacity = '1'));
-    }
-  };
+  },
 
+  fadeOut: (el, arg) => {
+      const duration = toMs(arg);
+    // fade simples
+      el.style.transition = 'none';
+      el.style.opacity = '1';
+      void el.offsetWidth;
+      el.style.transition = `opacity ${duration}ms ease`;
+      requestAnimationFrame(() => (el.style.opacity = '0'));
+  },
+
+  slideIn: (el, arg) => {
+  // Sintaxe esperada: slideIn(direction, distance, duration)
+  // Exemplo: slideIn(left, 50px, 800ms)
+    const parts = arg ? arg.split(',').map(p => p.trim()) : [];
+    const direction = parts[0] || 'left';
+    const distance = parts[1] || '30px';
+    const duration = toMs(parts[2] || '600ms');
+
+    ensureInlineBlockIfNeeded(el);
+
+    el.style.transition = 'none';
+    el.style.opacity = '0';
+  
+    let startTransform = '';
+    switch (direction.toLowerCase()) {
+      case 'left':
+        startTransform = `translateX(-${distance})`;
+      break;
+      case 'right':
+        startTransform = `translateX(${distance})`;
+      break;
+      default:
+        console.warn(`[CSScript] Direção inválida para slideIn: ${direction}`);
+        startTransform = `translateX(-${distance})`;
+  }
+
+    el.style.transform = startTransform;
+
+    void el.offsetWidth;
+
+    el.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
+
+    requestAnimationFrame(() => {
+      el.style.transform = 'translate(0, 0)';
+      el.style.opacity = '1';
+    });
+  },
+
+  slideOut: (el, arg) => {
+    // Sintaxe esperada: slideOut(direction, distance, duration)
+    const parts = arg ? arg.split(',').map(p => p.trim()) : [];
+    const direction = parts[0] || 'left';
+    const distance = parts[1] || '30px';
+    const duration = toMs(parts[2] || '600ms');
+
+    ensureInlineBlockIfNeeded(el);
+    el.style.opacity = '1';
+
+    let startTransform = '';
+    switch (direction.toLowerCase()) {
+      case 'left':
+        startTransform = `translateX(${distance})`;
+      break;
+      case 'right':
+        startTransform = `translateX(-${distance})`;
+      break;
+      default:
+        console.warn(`[CSScript] Direção inválida para slideIn: ${direction}`);
+        startTransform = `translateX(-${distance})`;
+    }
+
+    el.style.transform = startTransform;
+    el.style.transition = 'none';
+
+    void el.offsetWidth;
+
+    el.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
+    requestAnimationFrame(() => {
+      el.style.transform = 'translate(0, 0)';
+      el.style.opacity = '0';
+    });
+  },
+
+  fadeColor: (el, arg) => {
+  // Sintaxe esperada: fadeColor(fromColor, toColor, duration)
+  // Exemplo: fadeColor(#ff0000, #00ff00, 1.5s)
+    const parts = arg ? arg.split(',').map(p => p.trim()) : [];
+    const fromColor = parts[0] || '#000000';
+    const toColor = parts[1] || '#ffffff';
+    const duration = toMs(parts[2] || '1000ms');
+
+
+    el.style.transition = 'none';
+    el.style.color = fromColor;
+
+    void el.offsetWidth;
+
+    el.style.transition = `color ${duration}ms ease-in-out`;
+
+    requestAnimationFrame(() => {
+      el.style.color = toColor;
+    });
+  },
+
+  pop: (el, arg) => {
+  // Sintaxe esperada: pop(scale, duration)
+  // Exemplo: pop(1.2, 300)
+    const parts = arg ? arg.split(',').map(p => p.trim()) : [];
+    const scale = parseFloat(parts[0]) || 1.2;
+    const duration = toMs(parts[1] || '300ms');
+
+    ensureInlineBlockIfNeeded(el);
+
+    el.style.transition = 'none';
+    el.style.transform = `scale(${scale / 0.8})`;
+    el.style.opacity = '0';
+
+    void el.offsetWidth;
+
+    el.style.transition = `transform ${duration}ms cubic-bezier(0.25, 1.25, 0.5, 1), opacity ${duration}ms ease`;
+
+    requestAnimationFrame(() => {
+      el.style.transform = `scale(${scale})`;
+      el.style.opacity = '1';
+    });
+
+    setTimeout(() => {
+      el.style.transition = `transform ${duration * 0.8}ms ease-out`;
+      el.style.transform = 'scale(1)';
+    }, duration);
+  },
+
+  implode: (el, arg) => {
+    // Sintaxe esperada: implode(scale, duration)
+    // Exemplo: implode(1.2, 300)
+    const parts = arg ? arg.split(',').map(p => p.trim()) : [];
+    const scale = parseFloat(parts[0]) || 1.2;
+    const duration = toMs(parts[1] || '300ms');
+
+    ensureInlineBlockIfNeeded(el);
+
+    el.style.transition = 'none';
+    el.style.transform = `scale(${scale / 8})`;
+    el.style.opacity = '0';
+
+    void el.offsetWidth;
+
+    el.style.transition = `transform ${duration}ms cubic-bezier(0.25, 1.25, 0.5, 1), opacity ${duration}ms ease`;
+
+    requestAnimationFrame(() => {
+      el.style.transform = `scale(${scale % 0.9})`;
+      el.style.opacity = '1';
+    });
+
+    setTimeout(() => {
+      el.style.transition = `transform ${duration * 0.8}ms ease-out`;
+      el.style.transform = 'scale(1)';
+    }, duration);
+  },
+
+}
+
+  function addTransition(el, property, durationMs, easing = 'ease') {
+    const part = `${property} ${durationMs}ms ${easing}`;
+
+  // pega transição atual (inline ou computada)
+    const current = el.style.transition || getComputedStyle(el).transition || '';
+
+  // se já contém o property, remove a entrada antiga
+    const newCurrent = current
+    .split(',')
+    .map(s => s.trim())
+    .filter(s => !s.startsWith(property))
+    .filter(Boolean)
+    .join(', ');
+
+    el.style.transition = newCurrent ? `${part}, ${newCurrent}` : part;
+  }
+
+  
   function aplicaScrollReveal(selector, props) {
     const els = document.querySelectorAll(selector);
     if (!els.length) {
@@ -234,33 +451,74 @@
 
   function runActionOnElements(selector, action) {
     const els = document.querySelectorAll(selector);
-    if (!els || els.length === 0) {
-      log('nenhum elemento encontrado para selector:', selector);
+    if (!els.length) {
+      console.debug('[CSScript] nenhum elemento encontrado para selector:', selector);
       return;
     }
-    const animInfo = parseAnimString(action.value);
-    for (const el of els) {
-      const fn = animations[animInfo.name];
-      if (fn) fn(el, animInfo.arg);
-      else console.warn(`[CSScript] animação desconhecida: ${animInfo.name}`);
+
+  // Suporta várias animações separadas por vírgula
+    const anims = [];
+    let current = '';
+    let depth = 0;
+
+    for (const char of action.value) {
+      if (char === '(') depth++;
+      else if (char === ')') depth--;
+      if (char === ',' && depth === 0) {
+        anims.push(current.trim());
+        current = '';
+      } else {
+        current += char;
+      }
     }
+  
+    if (current.trim()) anims.push(current.trim());
+
+    for (const el of els) {
+      for (const anim of anims) {
+        const animInfo = parseAnimString(anim);
+        const fn = animations[animInfo.name];
+
+      // Verifica compatibilidade por tipo
+        const propType = action.prop.toLowerCase();
+
+        if (!fn) {
+          console.warn(`[CSScript] animação desconhecida: ${animInfo.name}`);
+          continue;
+        }
+
+      // Filtra por tipo de propriedade
+        if (
+          (propType === 'text' && ['fall', 'rise', 'slideIn', 'slideOut', 'fadeIn', 'fadeOut', 'pop', 'implode', 'shake'].includes(animInfo.name)) ||
+          (propType === 'color' && ['fadeColor'].includes(animInfo.name)) ||
+          (propType === 'background-color' && ['fadeColor', 'pop'].includes(animInfo.name))
+        ) {
+          fn(el, animInfo.arg);
+        } else {
+          console.warn(`[CSScript] animação '${animInfo.name}' não é compatível com a propriedade '${propType}'.`);
+        }
+      }
+    }
+
+    window.addEventListener('reveal.onScroll', (e) => {
+      if (!e.detail.visible) return; // só dispara quando aparece
+
+      const rules = cssRules['reveal.onScroll'];
+      if (!rules) return;
+
+      for (const { selector, actions } of rules) {
+      runActionOnElements(selector, actions);
+      }
+    });
   }
 
   function attachHandlerForEvent(selector, rawEventName, actions) {
-    // rawEventName: ex "window.onLoad" or "onClick"
+    // rawEventName: ex "window.onLoad" or "reveal.onScroll"
     const parts = rawEventName.split('.');
     let target = null, evt = rawEventName;
     if (parts.length === 2) {
       target = parts[0].trim();
       evt = parts[1].trim();
-    }
-
-    if (rawEventName === 'ScrollReveal') {
-      // Concatena todas as ações em texto bruto (para parsear como props)
-      const rawProps = actions.map(a => `${a.prop}: ${a.value};`).join("\n");
-      const props = parseProperties(rawProps);
-      aplicaScrollReveal(selector, props);
-      return;
     }
 
     const jsEvent = evt.replace(/^on/i, '').toLowerCase();
@@ -298,6 +556,28 @@
     els.forEach(el => {
       el.addEventListener(mapped, handler);
     });
+
+    if (rawEventName === 'reveal.onScroll') {
+      const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        for (const a of actions) {
+          runActionOnElements(selector, a);
+        }
+        // remove o observador após o primeiro disparo (ou comente se quiser repetir)
+        obs.unobserve(entry.target);
+      }
+      });
+    }, {
+      threshold: 0.1 // 10% visível já ativa
+    });
+
+      const els = document.querySelectorAll(selector);
+      els.forEach(el => observer.observe(el));
+
+      console.debug(`[CSScript] Ativado reveal.onScroll para ${selector}`);
+      return;
+    }
   }
 
   function parseProperties(text) {
@@ -366,3 +646,5 @@
   // expõe para debug
   window.CSScriptRuntime = { parseCSScript, processCSScriptCode, loadAll };
 })();
+
+

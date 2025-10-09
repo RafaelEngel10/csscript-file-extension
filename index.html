@@ -2,18 +2,24 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
+  <link rel="stylesheet" href="styles.css" />
   <title>Teste CSScript - Fall</title>
-  <style>
-    #titulo-principal {
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(-30px);
-      /* nenhuma transition necessária; runtime define a transição */
-    }
-  </style>
 </head>
 <body>
   <h1 class="classe" id="titulo-principal">Olá — apareço de cima para baixo!</h1>
+
+  <style>
+    html {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #222;
+      color: white;
+      font-family: sans-serif;
+      text-align: center;
+    }
+  </style>
 
   <!-- Inline CSScript: evita fetch/CORS -->
   <link rel="stylesheet" href="style.cssc" />

@@ -29,7 +29,7 @@
       }
     },
     {
-      // Events (window.onLoad, onClick, ScrollReveal, etc.)
+      // Events (window.onLoad, reveal.onScroll, onActivate, etc.)
       "scope": "keyword.control.event.cssc",
       "settings": {
         "foreground": "#C586C0", 
@@ -70,7 +70,7 @@
         "punctuation.section.block.end.cssc"
       ],
       "settings": {
-        "foreground": "#D4D4D4"
+        "foreground": "#D4D4D4",
       }
     }
   ]
