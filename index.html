@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Teste CSScript - Fall</title>
+  <style>
+    #titulo-principal {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(-30px);
+      /* nenhuma transition necessária; runtime define a transição */
+    }
+  </style>
+</head>
+<body>
+  <h1 id="titulo-principal">Olá — apareço de cima para baixo!</h1>
+
+  <!-- Inline CSScript: evita fetch/CORS -->
+  <link rel="stylesheet" href="style.cssc" />
+
+  <!-- runtime -->
+  <script src="csscript.js"></script>
+</body>
+</html>

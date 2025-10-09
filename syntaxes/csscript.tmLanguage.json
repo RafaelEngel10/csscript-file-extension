@@ -1,0 +1,40 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "CSScript",
+  "patterns": [
+    {
+      "name": "entity.name.tag.cssc",
+      "match": "^[a-zA-Z][a-zA-Z0-9_-]*(?=\\s*\\{)"
+    },
+    {
+      "name": "entity.other.attribute-name.class.cssc",
+      "match": "\\.[a-zA-Z_][\\w-]*"
+    },
+    {
+      "name": "entity.other.attribute-name.id.cssc",
+      "match": "#[a-zA-Z_][\\w-]*"
+    },
+    {
+      "name": "keyword.control.event.cssc",
+      "match": "\\b(window\\.onLoad|onHover|onClick|ScrollReveal|onFocus|onBlur)\\b"
+    },
+    {
+      "name": "support.constant.property-name.cssc",
+      "match": "\\b(background-color|text|opacity|scale|transform)\\b"
+    },
+    {
+      "name": "support.function.animation.cssc",
+      "match": "\\b(fadeIn|fadeOut|slideIn|slideOut|fall|rise|zoomIn|zoomOut)\\b"
+    },
+    {
+      "name": "comment.line.double-slash.cssc",
+      "match": "//.*$"
+    },
+    {
+      "name": "comment.block.cssc",
+      "begin": "/\\*",
+      "end": "\\*/"
+    }
+  ],
+  "scopeName": "source.cssc"
+}

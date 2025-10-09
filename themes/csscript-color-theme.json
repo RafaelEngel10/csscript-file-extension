@@ -1,0 +1,38 @@
+{
+  "name": "CSScript Theme",
+  "type": "dark",
+  "colors": {
+    "editor.foreground": "#E0E0E0",
+    "editor.background": "#0B0F14"
+  },
+  "tokenColors": [
+    {
+      "scope": "entity.name.tag.cssc",
+      "settings": { "foreground": "#61afef", "fontStyle": "bold" }
+    },
+    {
+      "scope": "entity.other.attribute-name.class.cssc",
+      "settings": { "foreground": "#98c379" }
+    },
+    {
+      "scope": "entity.other.attribute-name.id.cssc",
+      "settings": { "foreground": "#e06c75" }
+    },
+    {
+      "scope": "keyword.control.event.cssc",
+      "settings": { "foreground": "#c678dd", "fontStyle": "italic" }
+    },
+    {
+      "scope": "support.constant.property-name.cssc",
+      "settings": { "foreground": "#c23b1a" }
+    },
+    {
+      "scope": "support.function.animation.cssc",
+      "settings": { "foreground": "#d19a66" }
+    },
+    {
+      "scope": "comment.cssc",
+      "settings": { "foreground": "#5c6370", "fontStyle": "italic" }
+    }
+  ]
+}

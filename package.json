@@ -1,0 +1,47 @@
+{
+  "name": "csscript",
+  "displayName": "CSScript",
+  "description": "New stylish language for web development. CSScript is a CSS-like language that extends the capabilities of traditional CSS by introducing scripting features, allowing developers to create more dynamic and interactive stylesheets.",
+  "version": "1.0.8",
+  "publisher": "skrom",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RafaelEngel10"
+  },
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": ["Programming Languages"],
+  "icon": "icons/cssc-icon.png",
+  "contributes": {
+    "iconThemes": [
+    {
+      "id": "csscript-file-icons",
+      "label": "CSScript File Icons",
+      "path": "./csscript-icon-theme.json"
+    }
+    ],
+    "languages": [
+      {
+        "id": "csscript",
+        "aliases": ["CSScript", "cssc"],
+        "extensions": [".cssc"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "csscript",
+        "scopeName": "source.cssc",
+        "path": "./syntaxes/csscript.tmLanguage.json"
+      }
+    ],
+    "themes": [
+      {
+        "label": "CSScript Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/csscript-color-theme.json"
+      }
+    ]
+  }
+}

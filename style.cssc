@@ -1,0 +1,7 @@
+#titulo-principal {
+    ScrollReveal {
+        origin: left;
+        duration: 1000;
+        distance: 20%;
+    };
+}

@@ -1,0 +1,15 @@
+{
+  "iconDefinitions": {
+    "_file_cssc": {
+      "iconPath": "./icons/cssc-icon.png"
+    },
+  },
+  "fileExtensions": {
+    "cssc": "_file_cssc"
+  },
+  "languageIds": {
+    "csscript": "_file_cssc"
+  },
+  "folder": "_folder",
+  "folderExpanded": "_folder"
+}
