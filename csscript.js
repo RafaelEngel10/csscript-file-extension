@@ -155,19 +155,12 @@
   fall: (el, arg) => {
     const duration = toMs(arg);
     ensureInlineBlockIfNeeded(el);
-
-  // estado inicial (sem transition)
     el.style.transition = 'none';
     el.style.transform = 'translateY(-30px)';
     el.style.opacity = '0';
-
-  // força reflow para garantir que o browser registre o estado inicial
     void el.offsetWidth;
-
-  // aplica a transição (depois do reflow)
-    el.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
-
-  // dispara a animação no próximo frame
+    addTransition(el, 'transform', duration);
+    addTransition(el, 'opacity', duration);
     requestAnimationFrame(() => {
       el.style.transform = 'translateY(0)';
       el.style.opacity = '1';
@@ -177,19 +170,12 @@
   rise: (el, arg) => {
     const duration = toMs(arg);
     ensureInlineBlockIfNeeded(el);
-
-  // estado inicial (sem transition)
     el.style.transition = 'none';
     el.style.transform = 'translateY(30px)';
     el.style.opacity = '0';
-
-  // força reflow para garantir que o browser registre o estado inicial
     void el.offsetWidth;
-
-  // aplica a transição (depois do reflow)
-    el.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
-
-  // dispara a animação no próximo frame
+    addTransition(el, 'transform', duration);
+    addTransition(el, 'opacity', duration);
     requestAnimationFrame(() => {
       el.style.transform = 'translateY(0)';
       el.style.opacity = '1';
@@ -290,24 +276,16 @@
   },
 
   fadeColor: (el, arg) => {
-  // Sintaxe esperada: fadeColor(fromColor, toColor, duration)
-  // Exemplo: fadeColor(#ff0000, #00ff00, 1.5s)
     const parts = arg ? arg.split(',').map(p => p.trim()) : [];
     const fromColor = parts[0] || '#000000';
     const toColor = parts[1] || '#ffffff';
     const duration = toMs(parts[2] || '1000ms');
 
-
     el.style.transition = 'none';
     el.style.color = fromColor;
-
     void el.offsetWidth;
-
-    el.style.transition = `color ${duration}ms ease-in-out`;
-
-    requestAnimationFrame(() => {
-      el.style.color = toColor;
-    });
+    addTransition(el, 'color', duration);
+    requestAnimationFrame(() => el.style.color = toColor);
   },
 
   pop: (el, arg) => {
