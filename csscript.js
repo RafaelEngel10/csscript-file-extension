@@ -558,6 +558,29 @@
     return;
     }
 
+    // onHold.click event listener
+    if (rawEventName.toLowerCase() === 'onhold.click') {
+      const els = document.querySelectorAll(selector);
+      if (!els.length) return console.warn('[CSScript] Nenhum elemento para onHold.click:', selector);
+
+      const holdDuration = 500; // enough time to consider "hold" (ms).
+      els.forEach(el => {
+        let holdTimer;
+
+        el.addEventListener('mousedown', () => {
+          holdTimer = setTimeout(() => {
+            for (const a of actions) {
+              runActionOnElements(selector, a);
+            }
+          }, holdDuration);
+        });
+
+        el.addEventListener('mouseup', () => clearTimeout(holdTimer));
+        el.addEventListener('mouseleave', () => clearTimeout(holdTimer));
+      });
+      return;
+    }
+
 
     if (target && target.toLowerCase() === 'window') {
       // attach to window

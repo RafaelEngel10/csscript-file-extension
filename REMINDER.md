@@ -12,6 +12,10 @@
         ---> when double clicked, do smthg         #DONE
     }
 
+    onHold.click {
+        ---> when holding lmb, do smthg            #DONE
+    }
+
 
 # on( Sing/Dbl ).click # event special functions:
 
