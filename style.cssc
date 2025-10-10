@@ -1,5 +1,8 @@
 #titulo-principal {
-    window.onLoad {
-        color: pop(1.5, 300);
+    onSing.click {
+        text: pop(1.5, 300);
+    }
+    onDbl.click {
+        text: implode(1.5, 300);
     }
 }

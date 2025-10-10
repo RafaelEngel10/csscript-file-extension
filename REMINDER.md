@@ -1,20 +1,26 @@
-events to make:
+## events to make:
 
     DOMContent.onLoad {
         ---> when only DOM loads, disregarding content, only DOM.
     }
 
     onSing.click {
-        ---> when clicked, do smthg
+        ---> when clicked, do smthg                #DONE
     }
 
     onDbl.click {
-        ---> when double clicked, do smthg
+        ---> when double clicked, do smthg         #DONE
     }
 
 
+# on( Sing/Dbl ).click # event special functions:
 
-next text functions: 
+    emerge(initial state, final state, auxiliar function) ---> start at display: none, transits to display: block, while auxiliar function animates, those functions can be 
+    fall() / rise() / etc.
+
+
+
+## next text functions: 
 
     shake(direction, intesity, duration) ---> shake text, can be directioned to 'sideways' / 'cocktail-shaker' / 'seesaw'
 
@@ -22,7 +28,7 @@ next text functions:
 
 
 
-next color functions:
+## next color functions:
 
     camellionCamo(original color, final color, duration) ---> color change inner outer 
 
@@ -34,13 +40,13 @@ next color functions:
 
 
 
-new radius functions:
+## new radius functions:
 
     suddenChange(initial background-radius, final background-radius, duration) ---> changes from initial radius to final radius
 
 
 
-new gap functions: 
+## new gap functions: 
 
     bloomGap(initial gap, final gap, duration) ---> transitate from initial gap to final gap in a certain duration
 
@@ -50,7 +56,7 @@ new gap functions:
 
 
 
-new weight functions:
+## new weight functions:
 
     skinny(scale, duration) ---> multiplies weight by scale 
 

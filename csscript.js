@@ -490,7 +490,7 @@
         if (
           (propType === 'text' && ['fall', 'rise', 'slideIn', 'slideOut', 'fadeIn', 'fadeOut', 'pop', 'implode', 'shake'].includes(animInfo.name)) ||
           (propType === 'color' && ['fadeColor'].includes(animInfo.name)) ||
-          (propType === 'background-color' && ['fadeColor', 'pop'].includes(animInfo.name))
+          (propType === 'background-color' && ['fadeColor'].includes(animInfo.name))
         ) {
           fn(el, animInfo.arg);
         } else {
@@ -535,6 +535,21 @@
 
       els.forEach(el => {
         el.addEventListener('click', () => {
+          for (const a of actions) {
+            runActionOnElements(selector, a);
+          }
+          });
+        });
+    return;
+    }
+
+    // onDbl.click event listener
+    if (rawEventName.toLowerCase() === 'ondbl.click') {
+    const els = document.querySelectorAll(selector);
+    if (!els.length) return console.warn('[CSScript] Nenhum elemento para onDbl.click:', selector);
+
+      els.forEach(el => {
+        el.addEventListener('dblclick', () => {
           for (const a of actions) {
             runActionOnElements(selector, a);
           }
