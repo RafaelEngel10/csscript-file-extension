@@ -1,10 +1,9 @@
 /* csscript.js
    Runtime simples e resiliente para CSScript (.cssc)
-   - lê <link rel="stylesheet" href="... .cssc"> via fetch (requer servidor)
-   - ou lê <script type="text/cssc"> inline (sem CORS)
-   - suporta eventos em bloco:
+   - <link rel="stylesheet" href="... .cssc"> fetch only (host server needed)
+   - <script type="text/cssc"> inline (without CORS)
+   - support for event blocks:
        #id { window.onLoad { text: fall(600ms); }; }
-   - animação built-in: fall(duration) e fadeIn(duration)
 */
 
 (function () {
@@ -527,6 +526,23 @@
         runActionOnElements(selector, a);
       }
     };
+
+
+    // onSing.click event listener
+    if (rawEventName.toLowerCase() === 'onsing.click') {
+    const els = document.querySelectorAll(selector);
+    if (!els.length) return console.warn('[CSScript] Nenhum elemento para onSing.click:', selector);
+
+      els.forEach(el => {
+        el.addEventListener('click', () => {
+          for (const a of actions) {
+            runActionOnElements(selector, a);
+          }
+          });
+        });
+    return;
+    }
+
 
     if (target && target.toLowerCase() === 'window') {
       // attach to window

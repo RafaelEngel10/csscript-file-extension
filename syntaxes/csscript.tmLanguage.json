@@ -7,7 +7,7 @@
       "match": "^[a-zA-Z][a-zA-Z0-9_-]*(?=\\s*\\{)"
     },
     {
-      "name": "entity.other.attribute-name.class.cssc",
+      "name": "entity.attribute-name.class.cssc",
       "match": "\\.[a-zA-Z_][\\w-]*"
     },
     {
@@ -16,12 +16,12 @@
     },
     {
       "name": "keyword.control.event.cssc",
-      "match": "\\b(window\\.onLoad | reveal\\.onScroll | hide\\.onScroll | onActivate | onHover | )\\b"
+      "match": "\\b(window.onLoad|DOMContent.onLoad|reveal.onScroll|hide.onScroll|onSing.click|onDbl.click|)\\b"
     },
     {
       "name": "support.constant.property-name.cssc",
-      "match": "\\b(color|background-color|text|radius|gap|weight)\\b"
-    },
+      "match": "\\(\\b(color|background-color|text|radius|gap|weight)\\b\\)"
+    }, 
     {
       "name": "support.function.animation.cssc",
       "match": "\\b(fadeIn|fadeOut|slideIn|slideOut|fall|rise|fadeColor|pop|implode|shake)\\b"

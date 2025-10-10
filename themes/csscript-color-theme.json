@@ -16,7 +16,7 @@
     },
     {
       // Class (.classe)
-      "scope": "entity.other.attribute-name.class.cssc",
+      "scope": "entity.attribute-name.class.cssc",
       "settings": {
         "foreground": "#D7BA7D" 
       }
