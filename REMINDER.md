@@ -17,7 +17,7 @@
     }
 
 
-# on( Sing/Dbl ).click # event special functions:
+# on( Sing/Dbl/Hold ).click # event special functions:
 
     emerge(initial state, final state, auxiliar function) ---> start at display: none, transits to display: block, while auxiliar function animates, those functions can be 
     fall() / rise() / etc.
@@ -34,7 +34,7 @@
 
 ## next color functions:
 
-    camellionCamo(original color, final color, duration) ---> color change inner outer 
+    chameleonCamo(original color, final color, duration) ---> color change inner outer 
 
     octopusCamo(original color, final color, duration) ---> color change outer inner
 

@@ -155,12 +155,15 @@
   fall: (el, arg) => {
     const duration = toMs(arg);
     ensureInlineBlockIfNeeded(el);
+
     el.style.transition = 'none';
     el.style.transform = 'translateY(-30px)';
     el.style.opacity = '0';
+
     void el.offsetWidth;
-    addTransition(el, 'transform', duration);
-    addTransition(el, 'opacity', duration);
+
+    el.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
+
     requestAnimationFrame(() => {
       el.style.transform = 'translateY(0)';
       el.style.opacity = '1';
@@ -170,19 +173,23 @@
   rise: (el, arg) => {
     const duration = toMs(arg);
     ensureInlineBlockIfNeeded(el);
+
+  // estado inicial (sem transition)
     el.style.transition = 'none';
     el.style.transform = 'translateY(30px)';
     el.style.opacity = '0';
+
     void el.offsetWidth;
-    addTransition(el, 'transform', duration);
-    addTransition(el, 'opacity', duration);
+
+    el.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
+
     requestAnimationFrame(() => {
       el.style.transform = 'translateY(0)';
       el.style.opacity = '1';
     });
   },
 
-  fadeIn: (el, arg) => {
+   fadeIn: (el, arg) => {
       const duration = toMs(arg);
     // fade simples
       el.style.transition = 'none';
@@ -214,7 +221,7 @@
 
     el.style.transition = 'none';
     el.style.opacity = '0';
-  
+
     let startTransform = '';
     switch (direction.toLowerCase()) {
       case 'left':
@@ -276,16 +283,24 @@
   },
 
   fadeColor: (el, arg) => {
+  // Sintaxe esperada: fadeColor(fromColor, toColor, duration)
+  // Exemplo: fadeColor(#ff0000, #00ff00, 1.5s)
     const parts = arg ? arg.split(',').map(p => p.trim()) : [];
     const fromColor = parts[0] || '#000000';
     const toColor = parts[1] || '#ffffff';
     const duration = toMs(parts[2] || '1000ms');
 
+
     el.style.transition = 'none';
     el.style.color = fromColor;
+
     void el.offsetWidth;
-    addTransition(el, 'color', duration);
-    requestAnimationFrame(() => el.style.color = toColor);
+
+    el.style.transition = `color ${duration}ms ease-in-out`;
+
+    requestAnimationFrame(() => {
+      el.style.color = toColor;
+    });
   },
 
   pop: (el, arg) => {
@@ -342,6 +357,73 @@
       el.style.transition = `transform ${duration * 0.8}ms ease-out`;
       el.style.transform = 'scale(1)';
     }, duration);
+  },
+
+  shake: (el, arg) => {
+    // Sintaxe: shake(direction, intensity, duration)
+    // Exemplo: shake(sideways, 10px, 600ms)
+
+    const parts = arg ? arg.split(',').map(p => p.trim()) : [];
+    const direction = (parts[0] || 'sideways').toLowerCase();
+    const intensity = parts[1] || '10px';
+    const duration = toMs(parts[2] || '600ms');
+
+    ensureInlineBlockIfNeeded(el);
+    el.style.transition = 'none';
+    void el.offsetWidth;
+
+    // Define o eixo e o padrão de movimento
+    let keyframes;
+    switch (direction) {
+      case 'cocktail-shaker':
+        keyframes = [
+          'rotate(0deg)',
+          'rotate(5deg)',
+          'rotate(-5deg)',
+          'rotate(3deg)',
+          'rotate(-3deg)',
+          'rotate(0deg)'
+        ];
+        break;
+
+      case 'seesaw':
+        keyframes = [
+          'translateY(0)',
+          `translateY(-${intensity})`,
+          `translateY(${intensity})`,
+          `translateY(-${intensity})`,
+          `translateY(${intensity})`,
+          'translateY(0)'
+        ];
+        break;
+
+      case 'sideways':
+      default:
+        keyframes = [
+          'translateX(0)',
+          `translateX(-${intensity})`,
+          `translateX(${intensity})`,
+          `translateX(-${intensity})`,
+          `translateX(${intensity})`,
+          'translateX(0)'
+        ];
+    }
+
+    // Divide o tempo total pelos frames
+    const frameCount = keyframes.length - 1;
+    const frameDuration = duration / frameCount;
+
+    // Executa a sequência com requestAnimationFrame
+    let frame = 0;
+    const applyFrame = () => {
+      el.style.transform = keyframes[frame];
+      frame++;
+      if (frame < keyframes.length) {
+        setTimeout(() => requestAnimationFrame(applyFrame), frameDuration);
+      }
+    };
+
+    applyFrame();
   },
 
 }
