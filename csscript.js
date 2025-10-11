@@ -641,11 +641,9 @@
       return;
     }
 
-
+    // window.onLoad event listener
     if (target && target.toLowerCase() === 'window') {
-      // attach to window
       window.addEventListener(jsEvent, handler);
-      // se já carregou, executa imediatamente (para 'load' e similares)
       if (jsEvent === 'load' && document.readyState === 'complete') {
         log('window already loaded — executando handler imediatamente para', selector);
         handler();
@@ -653,10 +651,17 @@
       return;
     }
 
-    // if event is load but no window specified, attach to window
-    if (!target && jsEvent === 'load') {
-      window.addEventListener('load', handler);
-      if (document.readyState === 'complete') handler();
+    // DOMContent.onLoad event listener
+    if (rawEventName === 'DOMContent.onLoad') {
+      const handler = () => {
+        for (const a of actions) {
+          runActionOnElements(selector, a);
+        }
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', handler);
+      } else { handler(); }
       return;
     }
 
