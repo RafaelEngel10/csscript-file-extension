@@ -375,7 +375,7 @@
     // Define o eixo e o padrão de movimento
     let keyframes;
     switch (direction) {
-      case 'cocktail-shaker':
+      case 'seesaw':
         keyframes = [
           'rotate(0deg)',
           'rotate(5deg)',
@@ -386,7 +386,7 @@
         ];
         break;
 
-      case 'seesaw':
+      case 'cocktail-shaker':
         keyframes = [
           'translateY(0)',
           `translateY(-${intensity})`,

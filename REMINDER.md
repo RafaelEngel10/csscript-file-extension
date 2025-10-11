@@ -26,9 +26,9 @@
 
 ## next text functions: 
 
-    shake(direction, intesity, duration) ---> shake text, can be directioned to 'sideways' / 'cocktail-shaker' / 'seesaw'
+    shake(direction, intensity, duration) ---> shake text, can be directioned to 'sideways' / 'cocktail-shaker' / 'seesaw'                        #DONE
 
-    shiver(duration) ---> shiver text, can apply only duration
+    shiver(intensity, duration) ---> shiver text, can apply intensity and duration                                              
 
 
 
