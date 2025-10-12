@@ -15,6 +15,10 @@
       "match": "#[a-zA-Z_][\\w-]*(?=\\s*\\{)"
     },
     {
+      "name": "entity.orphan.element-name.async.cssc",
+      "match": "@[a-zA-Z_][\\w-]*"
+    },
+    {
       "name": "keyword.control.event.cssc",
       "match": "\\b(window.onLoad|DOMContent.onLoad|reveal.onScroll|hide.onScroll|onSing.click|onDbl.click|onHold.click)\\b"
     },
