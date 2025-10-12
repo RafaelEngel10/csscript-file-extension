@@ -1,7 +1,7 @@
 ## events to make:
 
     hide.onScroll {
-        ---> hide from scroll when not seen                  #DONE
+        ---> hide from scroll when not seen                  
     }
 
     DOMContent.onLoad {
@@ -50,7 +50,7 @@
 ## event special functions:
 
     create(initial state, final state, auxiliar function) ---> start at display: none, transits to display: block, while auxiliar function animates, those functions can be 
-    fall() / rise() / etc.
+    fall() / rise() / etc. Used to create opeennable menus.
 
 
 
@@ -95,3 +95,9 @@
     skinny(scale, duration) ---> multiplies weight by scale 
 
     heavy(scale, duration) ---> divides weight by scale
+
+
+
+## new message functions:
+    
+    alert("Message written here", duration) ---> creates a message innerHtml with a certain duration
