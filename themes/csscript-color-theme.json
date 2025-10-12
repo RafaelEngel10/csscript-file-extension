@@ -47,7 +47,7 @@
       // Parameters and properties (text, background-color, origin, etc.)
       "scope": "support.constant.property-name.cssc",
       "settings": {
-        "foreground": "#6919c5",
+        "foreground": "#4FC1FF",
       }
     },
     {
