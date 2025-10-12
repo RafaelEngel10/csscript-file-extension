@@ -24,11 +24,11 @@
     },
     {
       "name": "support.constant.property-name.cssc",
-      "match": "\\b(color|background-color|text|message|radius|gap|weight|brightness|request)\\b\\:"
+      "match": "\\b(color|background-color|text|message|radius|gap|weight|brightness|request|value)\\b\\:"
     }, 
     {
       "name": "support.function.animation.cssc",
-      "match": "\\b(fadeIn|fadeOut|slideIn|slideOut|fall|rise||pop|implode|shake|create|shiver|fadeColor|chameleonCamo|octopusCamo|paint|suddenChange|bloomGap|stagedGapColumn|stagedGapRow|skinny|heavy)\\b\\("
+      "match": "\\b(fadeIn|fadeOut|slideIn|slideOut|fall|rise||pop|implode|shake|create|shiver|fadeColor|chameleonCamo|octopusCamo|paint|suddenChange|bloomGap|stagedGapColumn|stagedGapRow|skinny|heavy|proposeValue|searchValue)\\b\\("
     },
     {
       "name": "comment.line.double-slash.cssc",

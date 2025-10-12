@@ -1,9 +1,9 @@
 ## new root async event CSScript :
 - Usualy used to declare constants when a certain animation is used too many times. 
 
-    --declareting ::
+    -- declareting ::
 
-        @async orphan {
+        @async {
             root.Event {
                 proposeValue(--rejection-animation) {
                     text: shake(sideways, 0.75px, 600);
@@ -13,7 +13,7 @@
         }
 
 
-    --using ::
+    -- using ::
 
         h1 {
             when.Disabled {

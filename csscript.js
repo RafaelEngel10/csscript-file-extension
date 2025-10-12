@@ -6,6 +6,8 @@
        #id { window.onLoad { text: fall(600ms); }; }
 */
 
+const CSSC_Constants = { };
+
 (function () {
   'use strict';
 
@@ -35,6 +37,7 @@
       el.style.display = 'inline-block';
     }
   }
+
 
   /********** parser (stack-safe para blocos aninhados 1 nível) **********/
   function parseCSScript(code) {
@@ -112,6 +115,36 @@
     }
 
     return blocks;
+  }
+
+  function parseAsyncConstants(code) {
+    const asyncBlocks = [];
+    const asyncRegex = /@async\s*\{([\s\S]*?)\}/g;
+    let match;
+
+    while ((match = asyncRegex.exec(code)) !== null) {
+      asyncBlocks.push(match[1].trim());
+    }
+
+    for (const block of asyncBlocks) {
+      const valueRegex = /proposeValue\((--[a-zA-Z0-9_-]+)\)\s*\{([\s\S]*?)\}/g;
+      let valMatch;
+      while ((valMatch = valueRegex.exec(block)) !== null) {
+        const name = valMatch[1].trim();
+        const content = valMatch[2].trim();
+
+        // Parse as animações contidas dentro do bloco
+        const actions = [];
+        const propRegex = /([a-zA-Z\-]+)\s*:\s*([^;]+);/g;
+        let pm;
+        while ((pm = propRegex.exec(content)) !== null) {
+          actions.push({ prop: pm[1].trim(), value: pm[2].trim() });
+        }
+
+        CSScriptConstants[name] = actions;
+        console.debug(`[CSScript] constante registrada: ${name}`, actions);
+      }
+    }
   }
 
 
@@ -514,6 +547,17 @@
       console.debug('[CSScript] nenhum elemento encontrado para selector:', selector);
       return;
     }
+    if (action.prop === 'value' && action.value.startsWith('searchValue(--')) {
+      const constName = action.value.match(/var\((--[a-zA-Z0-9_-]+)\)/)?.[1];
+      if (constName && CSScriptConstants[constName]) {
+        console.debug(`[CSScript] aplicando constante: ${constName}`);
+        for (const innerAction of CSScriptConstants[constName]) {
+          runActionOnElements(selector, innerAction);
+        }
+      } else {
+        console.warn(`[CSScript] constante '${constName}' não encontrada.`);
+      }
+    }
 
   // Suporta várias animações separadas por vírgula
     const anims = [];
@@ -550,7 +594,8 @@
         if (
           (propType === 'text' && ['fall', 'rise', 'slideIn', 'slideOut', 'fadeIn', 'fadeOut', 'pop', 'implode', 'shake'].includes(animInfo.name)) ||
           (propType === 'color' && ['paint', 'fadeColor', 'chameleonCamo', 'octopusCamo'].includes(animInfo.name)) ||
-          (propType === 'background-color' && ['paint', 'fadeColor', 'chameleonCamo', 'octopusCamo'].includes(animInfo.name)) 
+          (propType === 'background-color' && ['paint', 'fadeColor', 'chameleonCamo', 'octopusCamo'].includes(animInfo.name)) ||
+          (propType === 'value' && ['searchValue'].includes(animInfo.name))
           //(propType === 'radius' && ['suddenChange'].includes(animInfo.name)) ||
           //(propType === 'gap' && ['bloomGap', 'stagedGapColumn', 'stagedGapRow'].includes(animInfo.name)) ||
           //(propType === 'weight' && ['skinny', 'heavy'].includes(animInfo.name)) 
@@ -714,6 +759,7 @@
 
   /********** process code (blocks -> bind) **********/
   function processCSScriptCode(code) {
+    parseAsyncConstants(code);
     try {
       const blocks = parseCSScript(code);
       blocks.forEach(b => {
