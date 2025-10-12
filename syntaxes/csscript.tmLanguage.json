@@ -7,7 +7,7 @@
       "match": "^[a-zA-Z][a-zA-Z0-9_-]*(?=\\s*\\{)"
     },
     {
-      "name": "entity.attribute-name.class.cssc",
+      "name": "entity.other.attribute-name.class.cssc",
       "match": "\\.[a-zA-Z_][\\w-]*(?=\\s*\\{)"
     },
     {
@@ -24,7 +24,7 @@
     },
     {
       "name": "support.constant.property-name.cssc",
-      "match": "\\(\\b(color|background-color|text|message|radius|gap|weight|brightness|request)*(?=\\s*\\:)\\b\\)"
+      "match": "\\b(color|background-color|text|message|radius|gap|weight|brightness|request)\\b"
     }, 
     {
       "name": "support.function.animation.cssc",

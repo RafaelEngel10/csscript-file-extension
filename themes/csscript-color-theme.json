@@ -15,8 +15,8 @@
       }
     },
     {
-      // Class (.classe)
-      "scope": "entity.attribute-name.class.cssc",
+      // Class (.class)
+      "scope": "entity.other.attribute-name.class.cssc",
       "settings": {
         "foreground": "#D7BA7D" 
       }
@@ -26,6 +26,13 @@
       "scope": "entity.other.attribute-name.id.cssc",
       "settings": {
         "foreground": "#9CDCFE" 
+      }
+    },
+    {
+      // @async orphan
+      "scope": "entity.orphan.element-name.async.cssc",
+      "settings": {
+        "foreground": "#f09cf3"
       }
     },
     {
