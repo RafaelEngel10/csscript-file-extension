@@ -20,7 +20,7 @@
     },
     {
       "name": "support.constant.property-name.cssc",
-      "match": "\\(\\b(color|background-color|text|radius|gap|weight)*(?=\\s*\\:)\\b\\)"
+      "match": "\\(\\b(color|background-color|text|message|radius|gap|weight|brightness|request)*(?=\\s*\\:)\\b\\)"
     }, 
     {
       "name": "support.function.animation.cssc",

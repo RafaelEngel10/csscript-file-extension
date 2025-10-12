@@ -1,3 +1,28 @@
+## new root async event CSScript :
+- Usualy used to declare constants when a certain animation is used too many times. 
+
+    --declareting ::
+
+        @async orphan {
+            root.Event {
+                proposeValue(--rejection-animation) {
+                    text: shake(sideways, 0.75px, 600);
+                    color: fadeColor( #ff0000, 500);
+                };
+            }
+        }
+
+
+    --using ::
+
+        h1 {
+            when.Disabled {
+                constant: var(--rejection-animation);
+            }
+        }
+
+
+
 ## events to make:
 
     hide.onScroll {
@@ -98,6 +123,30 @@
 
 
 
-## new message functions:
+## new message property functions:
     
     alert("Message written here", duration) ---> creates a message innerHtml with a certain duration
+
+
+
+## new brightness property functions:
+
+    eclipseHalo(intensity, duration) ---> creates an brilliant light surrounding the text
+
+    neon(set color, direction, intensity) ---> creates a neon color
+
+
+
+## new request property functions:
+
+    callBack(no parameter) ---> aways before any animation. If animation done once, it will do the reverse of it when called again. Don't work in events like DOMContent.onLoad and window.onLoad
+
+    callDismiss(no parameter) ---> allows animation to happen one time. Don't work in events like DOMContent.onLoad and window.onLoad
+
+
+
+## new value property functions:
+
+    proposeValue(root variable) ---> set value to a variable
+
+    searchValue(root variable) ---> uses variable value
