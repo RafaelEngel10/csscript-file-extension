@@ -1,6 +1,6 @@
 {
   "name": "CSScript Theme",
-  "type": "dark",
+  "type": "dark-modern",
   "colors": {
     "editor.foreground": "#D4D4D4",
     "editor.background": "#1E1E1E"
