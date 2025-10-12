@@ -16,7 +16,7 @@
     },
     {
       "name": "entity.orphan.element-name.async.cssc",
-      "match": "@[a-zA-Z_][\\w-]*"
+      "match": "@[a-zA-Z_][\\w-]*(?=\\s*\\{)"
     },
     {
       "name": "keyword.control.event.cssc",
