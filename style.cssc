@@ -1,4 +1,7 @@
 #titulo-principal {
+    window.onLoad {
+        text: fall(600);
+    }
     onSing.click {
         text: shake(sideways, 3px, 600);
         color: fadeColor(#000, #fff, 600);
@@ -7,3 +10,4 @@
         text: implode(1.5, 300);
     }
 }
+ 

@@ -1,7 +1,11 @@
 ## events to make:
 
+    hide.onScroll {
+        ---> hide from scroll when not seen                  #DONE
+    }
+
     DOMContent.onLoad {
-        ---> when only DOM loads, disregarding content, only DOM.
+        ---> when only DOM loads, disregarding content, only DOM.              #DONE
     }
 
     onSing.click {
@@ -16,10 +20,36 @@
         ---> when holding lmb, do smthg            #DONE
     }
 
+    onFocus.hold {
+        ---> when focusing on smthg, like 'Tab', do some other thing
+    }
 
-# on( Sing/Dbl/Hold ).click # event special functions:
+    onSelection.hold {
+        ---> when u click and move mouse so can create a blue outline, do smthg about it
+    }
 
-    emerge(initial state, final state, auxiliar function) ---> start at display: none, transits to display: block, while auxiliar function animates, those functions can be 
+    when.Target {
+        ---> when target by a link or anchor, do smthg
+    }
+
+    when.Check {
+        ---> checkbox like when cheked, do stmg
+    }
+
+    when.Disabled {
+        ---> when disabled, do smthg
+    }
+
+    when.Enabled {
+        ---> when enabled, do smthg
+    }
+
+
+
+# on( Sing/Dbl/Hold ).click 
+## event special functions:
+
+    create(initial state, final state, auxiliar function) ---> start at display: none, transits to display: block, while auxiliar function animates, those functions can be 
     fall() / rise() / etc.
 
 
