@@ -17,7 +17,7 @@
 
         h1 {
             when.Disabled {
-                constant: var(--rejection-animation);
+                value: searchValue(--rejection-animation);
             }
         }
 
@@ -83,13 +83,13 @@
 
     shake(direction, intensity, duration) ---> shake text, can be directioned to 'sideways' / 'cocktail-shaker' / 'seesaw'                        #DONE
 
-    shiver(intensity, duration) ---> shiver text, can apply intensity and duration                                              
+    shiver(intensity, duration) ---> shiver text, can apply intensity and duration                                                                 
 
 
 
 ## next color functions:
 
-    chameleonCamo(original color, final color, duration) ---> color change inner outer 
+    chameleonCamo(original color, final color, duration) ---> color change inner outer                               #DONE       
 
     octopusCamo(original color, final color, duration) ---> color change outer inner
 

@@ -29,6 +29,75 @@
     return Number.isFinite(n) ? n : 600;
   }
 
+  function parseColor(input) {
+    const ctx = document.createElement("canvas").getContext("2d");
+
+    // remove espaços e deixa minúsculo
+    let color = input.trim().toLowerCase();
+
+    // ----------------------------
+    // 1️⃣ HEX (#RGB ou #RRGGBB)
+    // ----------------------------
+    if (color.startsWith("#")) {
+      // normaliza #RGB → #RRGGBB
+      if (color.length === 4) {
+        color =
+          "#" +
+          color
+            .slice(1)
+            .split("")
+            .map((c) => c + c)
+            .join("");
+      }
+      const numeric = parseInt(color.slice(1), 16);
+      return {
+        type: "hex",
+        original: input,
+        normalized: color.toUpperCase(),
+        numeric,
+      };
+    }
+
+    // ----------------------------
+    // 2️⃣ RGB ou RGBA
+    // ----------------------------
+    if (color.startsWith("rgb")) {
+      const match = color.match(/\d+(\.\d+)?/g);
+      if (!match) return null;
+      const [r, g, b] = match.map(Number);
+      const numeric = (r << 16) + (g << 8) + b;
+      return {
+        type: color.startsWith("rgba") ? "rgba" : "rgb",
+        original: input,
+        normalized: `rgb(${r}, ${g}, ${b})`,
+        numeric,
+      };
+    }
+
+    // ----------------------------
+    // 3️⃣ Nome de cor CSS (ex: red, blue, orange)
+    // ----------------------------
+    try {
+      ctx.fillStyle = color;
+      const computed = ctx.fillStyle; // o navegador converte o nome pra rgb() ou hex
+      if (computed.startsWith("#")) {
+        return parseColor(computed); // chama de novo pra padronizar
+      }
+      if (computed.startsWith("rgb")) {
+        return parseColor(computed);
+      }
+    } catch (e) {
+      return null;
+    }
+
+    // ----------------------------
+    // ❌ Caso não reconheça
+    // ----------------------------
+    return null;
+  }
+
+
+
   function ensureInlineBlockIfNeeded(el) {
     const style = window.getComputedStyle(el);
     if (style.display === 'inline') {
@@ -227,14 +296,14 @@
     switch (direction.toLowerCase()) {
       case 'left':
         startTransform = `translateX(-${distance})`;
-      break;
+        break;
       case 'right':
         startTransform = `translateX(${distance})`;
-      break;
+        break;
       default:
         console.warn(`[CSScript] Direção inválida para slideIn: ${direction}`);
         startTransform = `translateX(-${distance})`;
-  }
+    }
 
     el.style.transform = startTransform;
 
@@ -379,7 +448,9 @@
       case 'seesaw':
         keyframes = [
           'rotate(0deg)',
+          'rotate(2.5deg)',
           'rotate(5deg)',
+          'rotate(-2.5deg)',
           'rotate(-5deg)',
           'rotate(3deg)',
           'rotate(-3deg)',
@@ -391,8 +462,9 @@
         keyframes = [
           'translateY(0)',
           `translateY(-${intensity})`,
+          `translateY(-${intensity - (intensity / 2)})`,
           `translateY(${intensity})`,
-          `translateY(-${intensity})`,
+          `translateY(-${intensity - (intensity / 2)})`,
           `translateY(${intensity})`,
           'translateY(0)'
         ];
@@ -403,8 +475,9 @@
         keyframes = [
           'translateX(0)',
           `translateX(-${intensity})`,
-          `translateX(${intensity})`,
+          `translateX(${intensity - (intensity / 2)})`,
           `translateX(-${intensity})`,
+          `translateX(${intensity - (intensity / 2)})`,
           `translateX(${intensity})`,
           'translateX(0)'
         ];
@@ -425,6 +498,152 @@
     };
 
     applyFrame();
+  },
+
+  paint: (el, arg) => {
+    // Sintax: paint(direction, finalColor, duration)
+    // Example: paint(#ff000, 1500)
+
+    const parts = arg ? arg.split(',').map(p => p.trim()) : [];
+    const direction = parts[0] || 'left';
+    const initialColor = parts[1].trim().toLowerCase() || '#fff';
+    const finalColor = parts[2].trim().toLowerCase() || '#000';
+    const duration = toMs(parts[3] || '600ms');
+
+    ensureInlineBlockIfNeeded(el);
+    el.style.transition = 'none';
+    el.style.opacity = 0;
+    let keyframes;
+    switch (direction.toLowerCase()) {
+      case 'left':
+        el.style.background = `linear-gradient(to right, ${initialColor} 0%, ${parseColor(initialColor) - parseColor(finalColor)} 50%, ${finalColor} 100%)`;
+        Object.assign(el.style, {
+          backgroundSize: "200% 100%",
+          backgroundPosition: "0% 0%",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent"
+        });
+        keyframes = [
+          `0% 0%`,
+          `100% 0%`,
+        ];
+        break;
+      case 'right':
+        el.style.background = `linear-gradient(to left, ${initialColor} 0%, ${parseColor(initialColor) - parseColor(finalColor)} 50%, ${finalColor} 100%)`;
+        Object.assign(el.style, {
+          backgroundSize: "200% 100%",
+          backgroundPosition: "0% 0%",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent"
+        });
+        keyframes = [
+          `0% 0%`,
+          `100% 0%`,
+        ];
+        break;
+      case 'top':
+        el.style.background = `linear-gradient(to top, ${initialColor} 0%, ${parseColor(initialColor) - parseColor(finalColor)} 50%, ${finalColor} 100%)`;
+        Object.assign(el.style, {
+          backgroundSize: "200% 100%",
+          backgroundPosition: "0% 0%",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent"
+        });
+        keyframes = [
+          `0% 0%`,
+          `100% 0%`,
+        ];
+        break;
+      case 'bottom':
+        el.style.background = `linear-gradient(to bottom, ${initialColor} 0%, ${parseColor(initialColor) - parseColor(finalColor)} 50%, ${finalColor} 100%)`;
+        Object.assign(el.style, {
+          backgroundSize: "200% 100%",
+          backgroundPosition: "0% 0%",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent"
+        });
+        keyframes = [
+          `0% 0%`,
+          `100% 0%`,
+        ];
+        break;
+      default:
+        console.warn(`[CSScript] Direção não encontrada/existente: ${distance}`);
+        break;
+    }
+    
+  },
+
+  chameleonCamo: (el, arg) => {
+    // Sintax: chameleonCamo(originalColor, finalColor, duration)
+    // Ex: chameleonCamo(#ffffff, #8ee7ff, 1200ms)
+    const parts = arg ? arg.split(',').map(p => p.trim()) : [];
+    const originalColor = parts[0] || getComputedStyle(el).color || '#000000';
+    const finalColor = parts[1] || '#ffffff';
+    const duration = toMs(parts[2] || '1200ms');
+
+    ensureInlineBlockIfNeeded(el);
+
+    const prevColor = el.style.color || '';
+    const prevBg = el.style.backgroundImage || '';
+    const prevBgClip = el.style.backgroundClip || el.style.webkitBackgroundClip || '';
+    const prevWebkitTextFill = el.style.webkitTextFillColor || '';
+
+    el.style.color = originalColor;
+
+    el.style.backgroundImage = `radial-gradient(circle at center, ${finalColor} 0%, ${finalColor} 50%, transparent 51%)`;
+    el.style.backgroundRepeat = 'no-repeat';
+    el.style.backgroundPosition = 'center center';
+    el.style.backgroundSize = '100% 100%';
+    el.style.webkitBackgroundClip = 'text';
+    el.style.backgroundClip = 'text';
+
+    el.style.webkitTextFillColor = 'transparent';
+
+
+    const maskGrad = 'radial-gradient(circle at center, black 0%, black 50%, transparent 51%)';
+    el.style.webkitMaskImage = maskGrad;
+    el.style.maskImage = maskGrad;
+
+    el.style.webkitMaskSize = '0% 0%';
+    el.style.maskSize = '0% 0%';
+    el.style.webkitMaskRepeat = 'no-repeat';
+    el.style.maskRepeat = 'no-repeat';
+    el.style.maskPosition = 'center center';
+    el.style.webkitMaskPosition = 'center center';
+
+    const easing = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
+    el.style.transition = `-webkit-mask-size ${duration}ms ${easing}, mask-size ${duration}ms ${easing}`;
+
+    el.style.transition += `, background-size ${Math.round(duration*0.9)}ms ${easing}`;
+
+    void el.offsetWidth;
+
+
+    requestAnimationFrame(() => {
+
+      el.style.webkitMaskSize = '300% 300%';
+      el.style.maskSize = '300% 300%';
+
+      el.style.backgroundSize = '300% 300%';
+    });
+
+    setTimeout(() => {
+      el.style.color = finalColor;
+
+      el.style.backgroundImage = prevBg;
+      el.style.backgroundClip = prevBgClip;
+      el.style.webkitBackgroundClip = prevBgClip;
+      el.style.webkitTextFillColor = prevWebkitTextFill;
+
+      el.style.webkitMaskImage = '';
+      el.style.maskImage = '';
+      el.style.webkitMaskSize = '';
+      el.style.maskSize = '';
+      el.style.transition = '';
+
+      if (prevColor) el.style.color = prevColor;
+    }, duration + 50); 
   },
 
 }
