@@ -8,11 +8,11 @@
     },
     {
       "name": "entity.attribute-name.class.cssc",
-      "match": "\\.[a-zA-Z_][\\w-]*"
+      "match": "\\.[a-zA-Z_][\\w-]*(?=\\s*\\{)"
     },
     {
       "name": "entity.other.attribute-name.id.cssc",
-      "match": "#[a-zA-Z_][\\w-]*"
+      "match": "#[a-zA-Z_][\\w-]*(?=\\s*\\{)"
     },
     {
       "name": "keyword.control.event.cssc",
@@ -20,7 +20,7 @@
     },
     {
       "name": "support.constant.property-name.cssc",
-      "match": "\\(\\b(color|background-color|text|radius|gap|weight)\\b\\)"
+      "match": "\\(\\b(color|background-color|text|radius|gap|weight)*(?=\\s*\\:)\\b\\)"
     }, 
     {
       "name": "support.function.animation.cssc",

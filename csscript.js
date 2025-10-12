@@ -550,7 +550,10 @@
         if (
           (propType === 'text' && ['fall', 'rise', 'slideIn', 'slideOut', 'fadeIn', 'fadeOut', 'pop', 'implode', 'shake'].includes(animInfo.name)) ||
           (propType === 'color' && ['fadeColor'].includes(animInfo.name)) ||
-          (propType === 'background-color' && ['fadeColor'].includes(animInfo.name))
+          (propType === 'background-color' && ['fadeColor'].includes(animInfo.name)) 
+          //(propType === 'radius' && ['suddenChange'].includes(animInfo.name)) ||
+          //(propType === 'gap' && ['bloomGap', 'stagedGapColumn', 'stagedGapRow'].includes(animInfo.name)) ||
+          //(propType === 'weight' && ['skinny', 'heavy'].includes(animInfo.name)) 
         ) {
           fn(el, animInfo.arg);
         } else {
