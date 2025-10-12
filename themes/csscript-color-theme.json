@@ -47,15 +47,14 @@
       // Parameters and properties (text, background-color, origin, etc.)
       "scope": "support.constant.property-name.cssc",
       "settings": {
-        "foreground": "#4FC1FF",
+        "foreground": "#6919c5",
       }
     },
     {
       // Functions/animations (fall, fadeIn, rise, etc.)
       "scope": "support.function.animation.cssc",
       "settings": {
-        "foreground": "#FFD700",
-        "fontStyle": "bold"
+        "foreground": "#DCDCAA"
       }
     },
     {
