@@ -436,6 +436,8 @@
     const parts = arg ? arg.split(',').map(p => p.trim()) : [];
     const direction = (parts[0] || 'sideways').toLowerCase();
     const intensity = parts[1] || '10px';
+    const value = parseFloat(intensity) / 2;
+    const unit = intensity.replace(/[0-9.]/g, ''); 
     const duration = toMs(parts[2] || '600ms');
 
     ensureInlineBlockIfNeeded(el);
@@ -470,9 +472,17 @@
         keyframes = [
           'translateY(0)',
           `translateY(-${intensity})`,
+          `translateY(-${intensity*0.5})`,
+          `translateY(-${intensity*0.25})`,
           `translateY(${intensity})`,
+          `translateY(${intensity*0.5})`,
+          `translateY(${intensity*0.25})`,
           `translateY(-${intensity})`,
+          `translateY(-${intensity*0.5})`,
+          `translateY(-${intensity*0.25})`,
           `translateY(${intensity})`,
+          `translateY(${intensity*0.5})`,
+          `translateY(${intensity*0.25})`,
           'translateY(0)'
         ];
         break;
@@ -482,9 +492,17 @@
         keyframes = [
           'translateX(0)',
           `translateX(-${intensity})`,
+          `translateX(-${intensity*0.5})`,
+          `translateX(-${intensity*0.25})`,
           `translateX(${intensity})`,
+          `translateX(${intensity*0.5})`,
+          `translateX(${intensity*0.25})`,
           `translateX(-${intensity})`,
+          `translateX(-${intensity*0.5})`,
+          `translateX(-${intensity*0.25})`,
           `translateX(${intensity})`,
+          `translateX(${intensity*0.5})`,
+          `translateX(${intensity*0.25})`,
           'translateX(0)'
         ];
     }
