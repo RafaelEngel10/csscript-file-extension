@@ -91,9 +91,9 @@
 
     chameleonCamo(original color, final color, duration) ---> color change inner outer                               #DONE       
 
-    octopusCamo(original color, final color, duration) ---> color change outer inner
+    octopusCamo(original color, final color, duration) ---> color change outer inner                                  #DONE
 
-    paint(direction, original color, final color, duration) ---> color change depends on direction, can be 'left' / 'right' / 'top' / 'bottom'
+    paint(direction, original color, final color, duration) ---> color change depends on direction, can be 'left' / 'right' / 'top' / 'bottom'            #DONE
 
     ----> background-color can use same functions as color can, keep in mind that it is a syntaxe purpose only.
 

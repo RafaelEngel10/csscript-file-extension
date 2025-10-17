@@ -501,149 +501,163 @@
   },
 
   paint: (el, arg) => {
-    // Sintax: paint(direction, finalColor, duration)
-    // Example: paint(#ff000, 1500)
-
+    // Sintaxe: paint(direction, finalColor, duration)
+    // Ex: paint(left, #ff0000, 1200ms)
     const parts = arg ? arg.split(',').map(p => p.trim()) : [];
-    const direction = parts[0] || 'left';
-    const initialColor = parts[1].trim().toLowerCase() || '#fff';
-    const finalColor = parts[2].trim().toLowerCase() || '#000';
-    const duration = toMs(parts[3] || '600ms');
+    const direction = (parts[0] || 'left').toLowerCase();
+    const finalColor = parts[1] || '#000000';
+    const duration = toMs(parts[2] || '600ms');
+
+    // pega cor atual computada como initialColor (fallback para branco)
+    const computed = getComputedStyle(el).color || '#000000';
+    const initialColor = computed;
 
     ensureInlineBlockIfNeeded(el);
+
+    // guarda estados anteriores para cleanup
+    const prev = {
+      color: el.style.color || '',
+      bg: el.style.backgroundImage || '',
+      bgPos: el.style.backgroundPosition || '',
+      bgSize: el.style.backgroundSize || '',
+      bgClip: el.style.backgroundClip || el.style.webkitBackgroundClip || '',
+      webkitTextFill: el.style.webkitTextFillColor || ''
+    };
+
+    // prepara o background gradient com finalColor + initialColor em duas zonas
+    // a ordem dos stops/posição inicial depende da direção
+    let gradientDirection = 'to right';
+    let startPos = '100% 0%';
+    let endPos = '0% 0%';
+
+    if (direction === 'right') {
+      gradientDirection = 'to left';
+      startPos = '0% 0%';
+      endPos = '100% 0%';
+    } else if (direction === 'top') {
+      gradientDirection = 'to bottom';
+      startPos = '0% 100%';
+      endPos = '0% 0%';
+    } else if (direction === 'bottom') {
+      gradientDirection = 'to top';
+      startPos = '0% 0%';
+      endPos = '0% 100%';
+    } // default left: gradientDirection='to right', startPos='100% 0%', endPos='0% 0%'
+
+    // Gradient: primeira metade = finalColor, segunda metade = initialColor
+    // Ao mover background-position exibiremos finalColor progressivamente
     el.style.transition = 'none';
-    el.style.opacity = 0;
-    let keyframes;
-    switch (direction.toLowerCase()) {
-      case 'left':
-        el.style.background = `linear-gradient(to right, ${initialColor} 0%, ${parseColor(initialColor) - parseColor(finalColor)} 50%, ${finalColor} 100%)`;
-        Object.assign(el.style, {
-          backgroundSize: "200% 100%",
-          backgroundPosition: "0% 0%",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent"
-        });
-        keyframes = [
-          `0% 0%`,
-          `100% 0%`,
-        ];
-        break;
-      case 'right':
-        el.style.background = `linear-gradient(to left, ${initialColor} 0%, ${parseColor(initialColor) - parseColor(finalColor)} 50%, ${finalColor} 100%)`;
-        Object.assign(el.style, {
-          backgroundSize: "200% 100%",
-          backgroundPosition: "0% 0%",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent"
-        });
-        keyframes = [
-          `0% 0%`,
-          `100% 0%`,
-        ];
-        break;
-      case 'top':
-        el.style.background = `linear-gradient(to top, ${initialColor} 0%, ${parseColor(initialColor) - parseColor(finalColor)} 50%, ${finalColor} 100%)`;
-        Object.assign(el.style, {
-          backgroundSize: "200% 100%",
-          backgroundPosition: "0% 0%",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent"
-        });
-        keyframes = [
-          `0% 0%`,
-          `100% 0%`,
-        ];
-        break;
-      case 'bottom':
-        el.style.background = `linear-gradient(to bottom, ${initialColor} 0%, ${parseColor(initialColor) - parseColor(finalColor)} 50%, ${finalColor} 100%)`;
-        Object.assign(el.style, {
-          backgroundSize: "200% 100%",
-          backgroundPosition: "0% 0%",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent"
-        });
-        keyframes = [
-          `0% 0%`,
-          `100% 0%`,
-        ];
-        break;
-      default:
-        console.warn(`[CSScript] Direção não encontrada/existente: ${distance}`);
-        break;
-    }
-    
+    el.style.backgroundImage = `linear-gradient(${gradientDirection}, ${finalColor} 0%, ${finalColor} 50%, ${initialColor} 50%, ${initialColor} 100%)`;
+    el.style.backgroundRepeat = 'no-repeat';
+    el.style.backgroundSize = '200% 200%';
+    el.style.backgroundPosition = startPos;
+    el.style.webkitBackgroundClip = 'text';
+    el.style.backgroundClip = 'text';
+    el.style.webkitTextFillColor = 'transparent';
+
+    // força reflow
+    void el.offsetWidth;
+
+    // configura transição e dispara animação (background-position)
+    const easing = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
+    el.style.transition = `background-position ${duration}ms ${easing}, background-size ${Math.round(duration*0.9)}ms ${easing}`;
+
+    requestAnimationFrame(() => {
+      el.style.backgroundPosition = endPos;
+      // expandir um pouco background-size também garante bom visual em alguns navegadores
+      el.style.backgroundSize = '300% 300%';
+    });
+
+    // ao final, aplica finalColor como color e limpa estilos temporários
+    setTimeout(() => {
+      // aplica cor final permanentemente
+      el.style.color = finalColor;
+
+      // restaura/limpa backgrounds e clip
+      el.style.backgroundImage = prev.bg;
+      el.style.backgroundPosition = prev.bgPos;
+      el.style.backgroundSize = prev.bgSize;
+      el.style.backgroundClip = prev.bgClip;
+      el.style.webkitBackgroundClip = prev.bgClip;
+      el.style.webkitTextFillColor = prev.webkitTextFill;
+
+      // remove transition temporária (se quiser manter alguma transition global, adapte aqui)
+      el.style.transition = '';
+
+      // se havia cor inline antes, restaura-a (opcional; aqui priorizamos finalColor)
+      if (prev.color) el.style.color = prev.color;
+    }, duration + 40);
   },
 
+
   chameleonCamo: (el, arg) => {
-    // Sintax: chameleonCamo(originalColor, finalColor, duration)
-    // Ex: chameleonCamo(#ffffff, #8ee7ff, 1200ms)
+    // Sintaxe: chameleonCamo(originalColor, finalColor, duration)
+    // Ex: chameleonCamo(#fff, #00aaff, 1500)
+
     const parts = arg ? arg.split(',').map(p => p.trim()) : [];
-    const originalColor = parts[0] || getComputedStyle(el).color || '#000000';
-    const finalColor = parts[1] || '#ffffff';
+    const originalColor = parts[0] || getComputedStyle(el).color || '#000';
+    const finalColor = parts[1] || '#fff';
     const duration = toMs(parts[2] || '1200ms');
 
     ensureInlineBlockIfNeeded(el);
 
-    const prevColor = el.style.color || '';
-    const prevBg = el.style.backgroundImage || '';
-    const prevBgClip = el.style.backgroundClip || el.style.webkitBackgroundClip || '';
-    const prevWebkitTextFill = el.style.webkitTextFillColor || '';
-
-    el.style.color = originalColor;
-
-    el.style.backgroundImage = `radial-gradient(circle at center, ${finalColor} 0%, ${finalColor} 50%, transparent 51%)`;
-    el.style.backgroundRepeat = 'no-repeat';
+    // estado inicial
+    el.style.background = `radial-gradient(circle at center, ${finalColor} 0%, ${originalColor} 60%)`;
+    el.style.backgroundSize = '0% 0%';
     el.style.backgroundPosition = 'center center';
-    el.style.backgroundSize = '100% 100%';
+    el.style.backgroundRepeat = 'no-repeat';
     el.style.webkitBackgroundClip = 'text';
     el.style.backgroundClip = 'text';
-
     el.style.webkitTextFillColor = 'transparent';
+    el.style.transition = `background-size ${duration}ms ease-in-out`;
 
-
-    const maskGrad = 'radial-gradient(circle at center, black 0%, black 50%, transparent 51%)';
-    el.style.webkitMaskImage = maskGrad;
-    el.style.maskImage = maskGrad;
-
-    el.style.webkitMaskSize = '0% 0%';
-    el.style.maskSize = '0% 0%';
-    el.style.webkitMaskRepeat = 'no-repeat';
-    el.style.maskRepeat = 'no-repeat';
-    el.style.maskPosition = 'center center';
-    el.style.webkitMaskPosition = 'center center';
-
-    const easing = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
-    el.style.transition = `-webkit-mask-size ${duration}ms ${easing}, mask-size ${duration}ms ${easing}`;
-
-    el.style.transition += `, background-size ${Math.round(duration*0.9)}ms ${easing}`;
-
+    // força reflow e inicia animação
     void el.offsetWidth;
-
-
     requestAnimationFrame(() => {
-
-      el.style.webkitMaskSize = '300% 300%';
-      el.style.maskSize = '300% 300%';
-
-      el.style.backgroundSize = '300% 300%';
+      el.style.backgroundSize = '300% 300%'; // expande do centro até as bordas
     });
 
+    // após animação, define cor final sólida e limpa temporários
     setTimeout(() => {
       el.style.color = finalColor;
+      el.style.background = '';
+      el.style.webkitTextFillColor = '';
+    }, duration + 50);
+  },
 
-      el.style.backgroundImage = prevBg;
-      el.style.backgroundClip = prevBgClip;
-      el.style.webkitBackgroundClip = prevBgClip;
-      el.style.webkitTextFillColor = prevWebkitTextFill;
+  octopusCamo: (el, arg) => {
+    // Sintaxe: octopusCamo(originalColor, finalColor, duration)
+    // Ex: octopusCamo(#fff, #00aaff, 1500)
 
-      el.style.webkitMaskImage = '';
-      el.style.maskImage = '';
-      el.style.webkitMaskSize = '';
-      el.style.maskSize = '';
-      el.style.transition = '';
+    const parts = arg ? arg.split(',').map(p => p.trim()) : [];
+    const originalColor = parts[0] || getComputedStyle(el).color || '#000';
+    const finalColor = parts[1] || '#fff';
+    const duration = toMs(parts[2] || '1200ms');
 
-      if (prevColor) el.style.color = prevColor;
-    }, duration + 50); 
+    ensureInlineBlockIfNeeded(el);
+
+    // estado inicial
+    el.style.background = `radial-gradient(circle at center, ${originalColor} 0%, ${finalColor} 60%)`;
+    el.style.backgroundSize = '300% 300%'; // começa cobrindo tudo
+    el.style.backgroundPosition = 'center center';
+    el.style.backgroundRepeat = 'no-repeat';
+    el.style.webkitBackgroundClip = 'text';
+    el.style.backgroundClip = 'text';
+    el.style.webkitTextFillColor = 'transparent';
+    el.style.transition = `background-size ${duration}ms ease-in-out`;
+
+    // força reflow e inicia animação
+    void el.offsetWidth;
+    requestAnimationFrame(() => {
+      el.style.backgroundSize = '0% 0%'; // encolhe para o centro
+    });
+
+    // após animação, define cor final sólida e limpa temporários
+    setTimeout(() => {
+      el.style.color = finalColor;
+      el.style.background = '';
+      el.style.webkitTextFillColor = '';
+    }, duration + 50);
   },
 
 }
