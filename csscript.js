@@ -448,12 +448,16 @@
       case 'seesaw':
         keyframes = [
           'rotate(0deg)',
+          'rotate(1.25deg)',
           'rotate(2.5deg)',
           'rotate(5deg)',
+          'rotate(-1.25deg)',
           'rotate(-2.5deg)',
           'rotate(-5deg)',
           'rotate(3deg)',
+          'rotate(1.5deg)',
           'rotate(-3deg)',
+          'rotate(-1.5deg)',
           'rotate(0deg)'
         ];
         break;
@@ -462,9 +466,8 @@
         keyframes = [
           'translateY(0)',
           `translateY(-${intensity})`,
-          `translateY(-${intensity - (intensity / 2)})`,
           `translateY(${intensity})`,
-          `translateY(-${intensity - (intensity / 2)})`,
+          `translateY(-${intensity})`,
           `translateY(${intensity})`,
           'translateY(0)'
         ];
@@ -475,9 +478,8 @@
         keyframes = [
           'translateX(0)',
           `translateX(-${intensity})`,
-          `translateX(${intensity - (intensity / 2)})`,
+          `translateX(${intensity})`,
           `translateX(-${intensity})`,
-          `translateX(${intensity - (intensity / 2)})`,
           `translateX(${intensity})`,
           'translateX(0)'
         ];
@@ -501,20 +503,18 @@
   },
 
   paint: (el, arg) => {
-    // Sintaxe: paint(direction, finalColor, duration)
+    // Sintax: paint(direction, finalColor, duration)
     // Ex: paint(left, #ff0000, 1200ms)
     const parts = arg ? arg.split(',').map(p => p.trim()) : [];
     const direction = (parts[0] || 'left').toLowerCase();
     const finalColor = parts[1] || '#000000';
     const duration = toMs(parts[2] || '600ms');
 
-    // pega cor atual computada como initialColor (fallback para branco)
     const computed = getComputedStyle(el).color || '#000000';
     const initialColor = computed;
 
     ensureInlineBlockIfNeeded(el);
 
-    // guarda estados anteriores para cleanup
     const prev = {
       color: el.style.color || '',
       bg: el.style.backgroundImage || '',
@@ -524,8 +524,6 @@
       webkitTextFill: el.style.webkitTextFillColor || ''
     };
 
-    // prepara o background gradient com finalColor + initialColor em duas zonas
-    // a ordem dos stops/posição inicial depende da direção
     let gradientDirection = 'to right';
     let startPos = '100% 0%';
     let endPos = '0% 0%';
@@ -542,10 +540,9 @@
       gradientDirection = 'to top';
       startPos = '0% 0%';
       endPos = '0% 100%';
-    } // default left: gradientDirection='to right', startPos='100% 0%', endPos='0% 0%'
+    } 
 
-    // Gradient: primeira metade = finalColor, segunda metade = initialColor
-    // Ao mover background-position exibiremos finalColor progressivamente
+    
     el.style.transition = 'none';
     el.style.backgroundImage = `linear-gradient(${gradientDirection}, ${finalColor} 0%, ${finalColor} 50%, ${initialColor} 50%, ${initialColor} 100%)`;
     el.style.backgroundRepeat = 'no-repeat';
@@ -555,25 +552,19 @@
     el.style.backgroundClip = 'text';
     el.style.webkitTextFillColor = 'transparent';
 
-    // força reflow
     void el.offsetWidth;
 
-    // configura transição e dispara animação (background-position)
     const easing = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
     el.style.transition = `background-position ${duration}ms ${easing}, background-size ${Math.round(duration*0.9)}ms ${easing}`;
 
     requestAnimationFrame(() => {
       el.style.backgroundPosition = endPos;
-      // expandir um pouco background-size também garante bom visual em alguns navegadores
       el.style.backgroundSize = '300% 300%';
     });
 
-    // ao final, aplica finalColor como color e limpa estilos temporários
     setTimeout(() => {
-      // aplica cor final permanentemente
       el.style.color = finalColor;
 
-      // restaura/limpa backgrounds e clip
       el.style.backgroundImage = prev.bg;
       el.style.backgroundPosition = prev.bgPos;
       el.style.backgroundSize = prev.bgSize;
@@ -581,17 +572,15 @@
       el.style.webkitBackgroundClip = prev.bgClip;
       el.style.webkitTextFillColor = prev.webkitTextFill;
 
-      // remove transition temporária (se quiser manter alguma transition global, adapte aqui)
       el.style.transition = '';
 
-      // se havia cor inline antes, restaura-a (opcional; aqui priorizamos finalColor)
       if (prev.color) el.style.color = prev.color;
     }, duration + 40);
   },
 
 
   chameleonCamo: (el, arg) => {
-    // Sintaxe: chameleonCamo(originalColor, finalColor, duration)
+    // Sintax: chameleonCamo(originalColor, finalColor, duration)
     // Ex: chameleonCamo(#fff, #00aaff, 1500)
 
     const parts = arg ? arg.split(',').map(p => p.trim()) : [];
@@ -601,7 +590,6 @@
 
     ensureInlineBlockIfNeeded(el);
 
-    // estado inicial
     el.style.background = `radial-gradient(circle at center, ${finalColor} 0%, ${originalColor} 60%)`;
     el.style.backgroundSize = '0% 0%';
     el.style.backgroundPosition = 'center center';
@@ -611,13 +599,11 @@
     el.style.webkitTextFillColor = 'transparent';
     el.style.transition = `background-size ${duration}ms ease-in-out`;
 
-    // força reflow e inicia animação
     void el.offsetWidth;
     requestAnimationFrame(() => {
-      el.style.backgroundSize = '300% 300%'; // expande do centro até as bordas
+      el.style.backgroundSize = '300% 300%'; 
     });
 
-    // após animação, define cor final sólida e limpa temporários
     setTimeout(() => {
       el.style.color = finalColor;
       el.style.background = '';
@@ -626,7 +612,7 @@
   },
 
   octopusCamo: (el, arg) => {
-    // Sintaxe: octopusCamo(originalColor, finalColor, duration)
+    // Sintax: octopusCamo(originalColor, finalColor, duration)
     // Ex: octopusCamo(#fff, #00aaff, 1500)
 
     const parts = arg ? arg.split(',').map(p => p.trim()) : [];
@@ -636,9 +622,9 @@
 
     ensureInlineBlockIfNeeded(el);
 
-    // estado inicial
+    // initial state
     el.style.background = `radial-gradient(circle at center, ${originalColor} 0%, ${finalColor} 60%)`;
-    el.style.backgroundSize = '300% 300%'; // começa cobrindo tudo
+    el.style.backgroundSize = '300% 300%'; 
     el.style.backgroundPosition = 'center center';
     el.style.backgroundRepeat = 'no-repeat';
     el.style.webkitBackgroundClip = 'text';
@@ -646,17 +632,53 @@
     el.style.webkitTextFillColor = 'transparent';
     el.style.transition = `background-size ${duration}ms ease-in-out`;
 
-    // força reflow e inicia animação
     void el.offsetWidth;
     requestAnimationFrame(() => {
-      el.style.backgroundSize = '0% 0%'; // encolhe para o centro
+      el.style.backgroundSize = '0% 0%'; // inner center
     });
 
-    // após animação, define cor final sólida e limpa temporários
     setTimeout(() => {
       el.style.color = finalColor;
       el.style.background = '';
       el.style.webkitTextFillColor = '';
+    }, duration + 50);
+  },
+
+  shiver: (el, arg) => {
+    // Sintax: shiver(intensity, duration)
+    // Example: shiver(2px, 600)
+
+    const parts = arg ? arg.split(',').map(p => p.trim()) : [];
+    const intensity = parts[0] || '2px';
+    const duration = toMs(parts[1] || '600ms');
+
+    ensureInlineBlockIfNeeded(el);
+
+    const keyframes = `
+      @keyframes shiverEffect {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        10% { transform: translate(${intensity}, -${intensity}) rotate(-1deg); }
+        20% { transform: translate(-${intensity}, ${intensity}) rotate(1deg); }
+        30% { transform: translate(${intensity}, ${intensity}) rotate(1deg); }
+        40% { transform: translate(-${intensity}, -${intensity}) rotate(-1deg); }
+        50% { transform: translate(${intensity}, -${intensity}); }
+        60% { transform: translate(-${intensity}, ${intensity}); }
+        70% { transform: translate(${intensity}, ${intensity}); }
+        80% { transform: translate(-${intensity}, -${intensity}); }
+        90% { transform: translate(${intensity}, -${intensity}); }
+        100% { transform: translate(0, 0) rotate(0deg); }
+      }
+    `;
+
+    const styleTag = document.createElement('style');
+    styleTag.textContent = keyframes;
+    document.head.appendChild(styleTag);
+
+    el.style.animation = `shiverEffect ${duration}ms ease-in-out`;
+
+    setTimeout(() => {
+      el.style.animation = '';
+      styleTag.remove();
     }, duration + 50);
   },
 
@@ -782,7 +804,7 @@
 
       // Filtra por tipo de propriedade
         if (
-          (propType === 'text' && ['fall', 'rise', 'slideIn', 'slideOut', 'fadeIn', 'fadeOut', 'pop', 'implode', 'shake'].includes(animInfo.name)) ||
+          (propType === 'text' && ['fall', 'rise', 'slideIn', 'slideOut', 'fadeIn', 'fadeOut', 'pop', 'implode', 'shake', 'shiver'].includes(animInfo.name)) ||
           (propType === 'color' && ['paint', 'fadeColor', 'chameleonCamo', 'octopusCamo'].includes(animInfo.name)) ||
           (propType === 'background-color' && ['paint', 'fadeColor', 'chameleonCamo', 'octopusCamo'].includes(animInfo.name)) ||
           (propType === 'value' && ['searchValue'].includes(animInfo.name))

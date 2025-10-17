@@ -45,12 +45,17 @@
         ---> when holding lmb, do smthg            #DONE
     }
 
+
     onFocus.hold {
         ---> when focusing on smthg, like 'Tab', do some other thing
     }
 
     onSelection.hold {
         ---> when u click and move mouse so can create a blue outline, do smthg about it
+    }
+
+    when.Hover {
+        ---> when u hover onto element
     }
 
     when.Target {
@@ -83,7 +88,7 @@
 
     shake(direction, intensity, duration) ---> shake text, can be directioned to 'sideways' / 'cocktail-shaker' / 'seesaw'                        #DONE
 
-    shiver(intensity, duration) ---> shiver text, can apply intensity and duration                                                                 
+    shiver(intensity, duration) ---> shiver text, can apply intensity and duration                                #DONE                                                      
 
 
 
@@ -101,7 +106,7 @@
 
 ## new radius functions:
 
-    suddenChange(initial background-radius, final background-radius, duration) ---> changes from initial radius to final radius
+    suddenChange(initial border-radius, final border-radius, duration) ---> changes from initial radius to final radius
 
 
 
@@ -139,7 +144,7 @@
 
 ## new request property functions:
 
-    callBack(no parameter) ---> aways before any animation. If animation done once, it will do the reverse of it when called again. Don't work in events like DOMContent.onLoad and window.onLoad
+    callBack(no parameter) ---> aways before any animation. If animation done once, it will do the reverse of it when called again. Can't work on events like DOMContent.onLoad and window.onLoad
 
     callDismiss(no parameter) ---> allows animation to happen one time. Don't work in events like DOMContent.onLoad and window.onLoad
 
