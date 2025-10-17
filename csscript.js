@@ -448,16 +448,20 @@
       case 'seesaw':
         keyframes = [
           'rotate(0deg)',
+          'rotate(0.625deg)',
           'rotate(1.25deg)',
           'rotate(2.5deg)',
           'rotate(5deg)',
+          'rotate(-0.625deg)',
           'rotate(-1.25deg)',
           'rotate(-2.5deg)',
           'rotate(-5deg)',
           'rotate(3deg)',
           'rotate(1.5deg)',
+          'rotate(0.75deg)',
           'rotate(-3deg)',
           'rotate(-1.5deg)',
+          'rotate(-0.75deg)',
           'rotate(0deg)'
         ];
         break;
