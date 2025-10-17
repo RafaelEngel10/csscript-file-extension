@@ -5,7 +5,7 @@
 
         @async {
             root.Event {
-                proposeValue(--rejection-animation) {
+                proposeValue(${rejection-animation}) {
                     text: shake(sideways, 0.75px, 600);
                     color: fadeColor( #ff0000, 500);
                 };
@@ -16,8 +16,8 @@
     -- using ::
 
         h1 {
-            when.Disabled {
-                value: searchValue(--rejection-animation);
+            window.onLoad {
+                value: searchValue(${rejection-animation});
             }
         }
 

@@ -29,6 +29,40 @@
     return Number.isFinite(n) ? n : 600;
   }
 
+  const animationStates = new WeakMap();
+
+  function reverseAnimation(el, animName, arg) {
+    switch (animName) {
+      case 'fadeIn':
+        animations.fadeOut(el, arg);
+        break;
+      case 'fadeOut':
+        animations.fadeIn(el, arg);
+        break;
+      case 'slideIn':
+        animations.slideOut ? animations.slideOut(el, arg) : console.warn("slideOut not found");
+        break;
+      case 'slideOut':
+        animations.slideIn ? animations.slideIn(el, arg) : console.warn("slideIn not found");
+        break;
+      case 'rise':
+        animations.fall ? animations.fall(el, arg) : console.warn("fall not found");
+        break;
+      case 'fall':
+        animations.rise ? animations.rise(el, arg) : console.warn("rise not found");
+        break;
+      case 'pop':
+        animations.implode ? animations.implode(el, arg) : console.warn("implode not found");
+        break;
+      case 'implode':
+        animations.pop ? animations.pop(el, arg) : console.warn("pop not found");
+        break;
+      default:
+        console.warn(`[CSScript] reversão não definida para ${animName}`);
+    }
+  }
+
+
   function parseColor(input) {
     const ctx = document.createElement("canvas").getContext("2d");
 
@@ -436,8 +470,6 @@
     const parts = arg ? arg.split(',').map(p => p.trim()) : [];
     const direction = (parts[0] || 'sideways').toLowerCase();
     const intensity = parts[1] || '10px';
-    const value = parseFloat(intensity) / 2;
-    const unit = intensity.replace(/[0-9.]/g, ''); 
     const duration = toMs(parts[2] || '600ms');
 
     ensureInlineBlockIfNeeded(el);
@@ -704,6 +736,7 @@
     }, duration + 50);
   },
 
+
 }
 
   function addTransition(el, property, durationMs, easing = 'ease') {
@@ -793,7 +826,6 @@
       return;
     }
 
-  // Suporta várias animações separadas por vírgula
     const anims = [];
     let current = '';
     let depth = 0;
@@ -826,6 +858,7 @@
 
       // Filtra por tipo de propriedade
         if (
+          (propType === 'request' && ['callBack', 'callDismiss'].includes(animInfo.name)) ||
           (propType === 'text' && ['fall', 'rise', 'slideIn', 'slideOut', 'fadeIn', 'fadeOut', 'pop', 'implode', 'shake', 'shiver'].includes(animInfo.name)) ||
           (propType === 'color' && ['paint', 'fadeColor', 'chameleonCamo', 'octopusCamo'].includes(animInfo.name)) ||
           (propType === 'background-color' && ['paint', 'fadeColor', 'chameleonCamo', 'octopusCamo'].includes(animInfo.name)) ||
