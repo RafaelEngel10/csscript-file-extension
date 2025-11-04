@@ -12,11 +12,11 @@
 
 - Sua sintaxe é simples e imita quase que totalmente a da estilização em cascata:
 
-<pre>```elemento/.classe/#id { 
+<pre>elemento/.classe/#id { 
     evento.ativador{
         propriedade-especíica: animação(); 
     }
-} ``` </pre>
+}  </pre>
 
 - Primeiro se declara o elemento que será feito a animação. Em seguida, coloque o evento o qual vai ser responsável por ativar as animações quando sua condição de ocorrência for verdade. Além disso, é instruido dentro do evento a propriedade que vai ser feita a animação.
 
