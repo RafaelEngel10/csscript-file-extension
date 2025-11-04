@@ -12,11 +12,11 @@
 
 - Sua sintaxe é simples e imita quase que totalmente a da estilização em cascata:
 
-> elemento/.classe/#id { 
+<pre>```elemento/.classe/#id { 
     evento.ativador{
         propriedade-especíica: animação(); 
     }
-}
+} ``` </pre>
 
 - Primeiro se declara o elemento que será feito a animação. Em seguida, coloque o evento o qual vai ser responsável por ativar as animações quando sua condição de ocorrência for verdade. Além disso, é instruido dentro do evento a propriedade que vai ser feita a animação.
 
@@ -106,7 +106,7 @@
 
 ##  Eventos CSScript:
 
-### Eventos já feitas =
+### Eventos já feitos =
 
 - DOMContent.onLoad ==
     Assim que o DOM for carregado, realiza uma animação.
@@ -127,7 +127,7 @@
     Executa a animação com o segurar de um clique.
 
 
-### Eventos ainda não feitas =
+### Eventos ainda não feitos =
 
 - hide.onScroll ==
     Assim que escondido pelo scroll, realiza uma animação.
