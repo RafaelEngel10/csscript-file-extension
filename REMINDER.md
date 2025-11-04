@@ -142,7 +142,11 @@
 
 
 
-## new request property functions:
+## new request property functions:  
+
+    callRepeat(number) ---> repeat animations.
+
+    callAnswer() ---> 
 
     callBack(no parameter) ---> aways before any animation. If animation done once, it will do the reverse of it when called again. Can't work on events like DOMContent.onLoad and window.onLoad
 
