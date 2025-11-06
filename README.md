@@ -5,7 +5,7 @@
 
 ## O que há de especial no CSScript?
 
-- Sua principal característica é facilitar o uso de animações JavaScript, com uma sintaxe mais amigável e legível. Além disso, há características íncriveis a serem exploradas que serão explicadas conforme a idéia do projeto se amplia. Meu objeto com isso é incentivar a criatividade e animar mais um mundo onde a maioria dos sites são estáticos e sem graça.
+- Sua principal característica é facilitar o uso de animações JavaScript, com uma sintaxe mais amigável e legível. Além disso, há características íncriveis a serem exploradas que serão explicadas conforme a idéia do projeto se amplia. Meu objeto com isso é incentivar a criatividade e animar mais um mundo onde a maioria dos sites são estáticos.
 
 
 ## Como funciona sua sintaxe?
@@ -23,23 +23,23 @@
 
 ## Propriedades CSScript:
 
-- text: ;  ==> propriedade referente ao texto do elemento.
+- text: ;  ---> propriedade referente ao texto do elemento.
 
-- color: ; ==> propriedade referente a cor do elemento.
+- color: ; ---> propriedade referente a cor do elemento.
 
-- radius: ; ==> propriedade referente ao raio de curvatura de um elemento.
+- radius: ; ---> propriedade referente ao raio de curvatura de um elemento.
 
-- gap: ; ==> propriedade referente a distância entre dois elementos ou mais.
+- gap: ; ---> propriedade referente a distância entre dois elementos ou mais.
 
-- weight: ; ==> propriedade referente ao peso de um texto de um elemento.
+- weight: ; ---> propriedade referente ao peso de um texto de um elemento.
 
-- message: ; ==> propriedade referente a envio de mensagens para o DOM.
+- message: ; ---> propriedade referente a envio de mensagens para o DOM.
 
-- brightness: ; ==> propriedade referente a claridade de um objeto.
+- brightness: ; ---> propriedade referente a claridade de um objeto.
 
-- request: ; ==> propriedade de requisição (Explicação mais detalhada na seção de "Limites responsivos").
+- request: ; ---> propriedade de requisição (Explicação mais detalhada na seção de "Limites responsivos").
 
-- value: ; ==> propriedade de valor (Explicação mais detalhada na seção de "Eventos assíncronos").
+- value: ; ---> propriedade de valor (Explicação mais detalhada na seção de "Eventos assíncronos").
 
 
 ## Animações CSScript: 
@@ -68,7 +68,7 @@
         - "cocktail-shaker": "coqueteleira" -> vertical;
         - "sideways": "laterais" -> horizontal;
 
-- [x] color == 
+- [ ] color == 
     - fadeColor(cor final, duração) ---> animação de aparecimento da cor
 
     - chameleonCamo(cor final, duração) ---> animação de troca de cor, de dentro para fora.
@@ -76,6 +76,8 @@
     - octopusCamo(cor final, duraçã) ---> animação de troca de cor, de fora para dentro.
 
     - paint(direção, cor final, duração) ---> colore conforme a direção.
+
+    - liquidFill(direção, cor final, duração) ---> colore como se estivesse enchendo de algum líquido.
 
 - [] radius ==
     - round(estado inicial, estado final, duração) ---> muda do estado inicial de border-radius para o estado final com uma transição simples.
@@ -124,40 +126,112 @@
 - [x] onHold.click ==
     Executa a animação com o segurar de um clique.
 
-- [] hide.onScroll ==
+- [ ] hide.onScroll ==
     Assim que escondido pelo scroll, realiza uma animação.
 
-- [] onFocus.hold ==
+- [ ] onFocus.hold ==
     Quando o elemento é focado, realiza a animação.
 
-- [] onSelection.hold ==
+- [ ] onSelection.hold ==
     Quando um elemento é selecionado, realiza a animação.
 
-- [] when.Hover ==
+- [ ] when.Hover ==
     Ao passar o mouse por cima do elemento.
 
-- [] when.Target ==
+- [ ] when.Target ==
     Ao ser transformado em alvo por uma âncora ou link.
 
-- [] when.CheckBox ==
+- [ ] when.CheckBox ==
     Ao ser checado, uma animação ocorre com um elemento input do tipo checkbox.
 
-- [] when.Checked ==
+- [ ] when.Checked ==
     Um link ja checado uma vez, realizará uma animação.
+
+
+##  Soma e Concatenação de Animações =
+
+- No CSScript, podemos realizar a soma ou a concatenação de animações. A soma de duas ou mais animações ocorre apenas quando são de famílias diferentes. Já a concatenação ocorre em especimes de mesma família.
+
+* Ambos são representados pelos mesmo símbolo (++).
+
+
+### Soma =
+
+- Na soma de animações, ocorre a junção das propriedades de cada, formando uma nova interpolação sem nome. Isso pode ser explicado utilizando vetores da *Física*. Imagine duas setas, ambas apontando para o mesmo centro, mas uma é totalmente horizontal e a outra é totalmente vertical. Ao somar essas duas, você consegue uma resultante diagonal com 45° ângulares. Essas setas são as movimentações e a resultante é nada mais que a soma dessas mesmas.
+
+<pre>exemplo {
+    window.onLoad {
+        text: fall() ++ slideIn();
+    }
+} </pre>
+
+
+### Concatenação =
+
+- Durante uma concatenação, as animações são colocadas em sequência sem intervalo de tempo entre uma e outra. Pode-se usar como exemplo a concatenação das animações:
+
+<pre>exemplo {
+    window.onLoad {
+        text: slideIn() ++ slideOut();
+    }
+}</pre>
+
+- A animação slideIn é executada primeiro e, ao seu término, a segunda é executada imediatamente.
+
+
+### Concatenação Forçada =
+
+- A concatenação de animações de famílias diferentes podem ser realizadas utilizando um símbolo universal. Esse símbolo representa que, a função antes e depois serão postas em sequência e não somadas.
+
+> O símbolo de concatenação forçada é: +-
+
+<pre>exemplo {
+    window.onLoad {
+        text: slideIn +- rise();
+    }
+} </pre>
+
+
+## Manipulação de Interpolação =
+
+- Uma interpolação nada mais é que o resultado obtido da soma/concatenação de duas ou mais animações. Suas propriedades podem ser livremente manipulados, bastando apenas seguir uma síntaxe indicadora.
+
+<pre>exemplo {
+    window.onLoad {
+        text: fall() ++ slideIn() => ;
+    }
+}</pre>
+
+- Sendo assim, com o indicador (=>) é possível definir qual será a animação que vai executar ao final da interpolação:
+
+<pre>exemplo {
+    window.onLoad {
+        text: fall() ++ slideIn() => fadeOut();   
+    }
+}</pre>
+
+* Ao final da interpolação, em sequência, a animação de fadeOut será executada.
+
+- Além disso, é possível definir propriedades à interpolação, através do símbolo de (&). Não é necessário ajustar a posição da propriedade para antes ou depois de qualquer animação.
+
+<pre>exemplo {
+    window.onLoad {
+        text: fall() ++ slideIn() => fadeOut() &ease-in;   
+    }
+}</pre>
 
 
 ##  Eventos Assíncronos =
     
-> Eventos assíncronos nada mais são do que eventos que não necessitam de uma condição para ser executado. O melhor exemplo disso é o evento @root, o qual é um evento que permite a inicialização de objetos.
+* Eventos assíncronos nada mais são do que eventos que não necessitam de uma condição para ser executado. O melhor exemplo disso é o evento @root, o qual é um evento que permite a inicialização de objetos.
 
 <pre>
 html {
     @root {
-        value: proposeValue(--deny-text);
-        --deny-text: {
+        value: proposeValue(--deny-text {
             text: fall();
             color: paint();
-        } 
+        });
     }
 }
 </pre>
@@ -165,13 +239,13 @@ html {
 <p>O evento (@root) <b>sempre</b> deve estar dentro do <i>elemento html</i>.</p>
 
 - Outros eventos assíncronos podem ser citados:
-    - @media ---> aplica animações conforme o tamanho da tela do usuário.
+    - *@media* ---> aplica animações conforme o tamanho da tela do usuário.
 
-    - @import ---> importa aplicações e outras bibliotecas.
+    - *@import* ---> importa aplicações e outras bibliotecas.
 
-    - @charset ---> define a codificação do arquivo.
+    - *@charset* ---> define a codificação do arquivo.
 
-    - @layer ---> cria uma camada de ordem de prioridade entre blocos.
+    - *@layer* ---> cria uma camada de ordem de prioridade entre blocos.
 
 
 ##  Limites Responsivos =
@@ -179,20 +253,13 @@ html {
 - Através da propriedade de requisição, é possível definir quantas vezes a animação vai repetir, além de definir limites de quantas vezes a animação poderá ser repetida.
 
 - Os possíveis valores para essa propriedade são:
-    - callDismiss(número de tolerância) ---> permite a repetição da mesma animação por um número de vezes tolerado.
+    - **callDismiss(número de tolerância)** ---> permite a repetição da mesma animação por um número de vezes tolerado.
 
-    - callBack(sem parâmetro) ---> permite que uma vez feita a animação, ao ser chamada novamente, vai fazer o seu inverso.
+    - **callReturn(sem parâmetro)** ---> permite que uma vez feita a animação, ao ser chamada novamente, vai fazer o seu inverso.
 
-    - callRepeat(número de vezes) ---> repete a mesma animação por um número definido de vezes. <br>
-    Se quiser que animação fique em loop, basta colocar qualquer número negativo.
+    - **callRepeat(número de vezes)** ---> repete a mesma animação por um número definido de vezes. <br>
+    > Para que animação fique em loop, basta colocar qualquer valor negativo.
 
-    - callAnswer(sem parâmetro) ---> ...
+    - **callAwait(tempo de espera em ms)** ---> espera um tempo determinado antes de realizar a próxima atividade.
 
 
-##  Soma e Concatenação de Animações =
-
-- No CSScript, podemos realizar a soma ou a concatenação de animações. A soma de duas ou mais animações ocorre apenas quando as animações são de famílias diferentes. Já a concatenação ocorre em animações de mesma família.
-
-> Ambos são representados pelos mesmo símbolo (++). 
-
-- Na soma de animações, ocorre a junção das propriedades de cada, formando uma nova interpolação sem nome. Isso pode ser explicado utilizando vetores da Física. Imagine duas setas, ambas apontando para o mesmo centro, mas uma é totalmente horizontal e a outra é totalmente vertical. Ao somar essas duas, você consegue uma resultante diagonal com 45° ângulares. Essas setas são as movimentações e a resultante é nada mais que a soma dessas mesmas.
