@@ -79,28 +79,28 @@
 
     - liquidFill(direção, cor final, duração) ---> colore como se estivesse enchendo de algum líquido.
 
-- [] radius ==
+- [ ] radius ==
     - round(estado inicial, estado final, duração) ---> muda do estado inicial de border-radius para o estado final com uma transição simples.
 
-- [] gap ==
+- [ ] gap ==
     - bloom(gap inicial, gap final, duração) ---> transita do gap inicial para o final sem preferência.
 
     - stagedBloom(horizontal ou vertical, duração) ---> transita do gap inicial para o final com preferência referenciada.
 
-- [] weight ==
+- [ ] weight ==
     - skinny(escala, duração) ---> multiplica o peso da fonte pela escala em porcentagem.
     
     - heavy(escala, duração) ---> divide o peso da fonte pela escala em porcentagem.
 
-- [] message == 
+- [ ] message == 
     - alert("Digite a mensagem aqui!", duração) ---> cria uma mensagem no HTML que possui uma duração definida.
 
-- [] brightness ==
+- [ ] brightness ==
     - halo(intensidade, duração) ---> cria uma luz envolta do texto.
 
     - neon(cor, direção, intensidade) ---> cria uma luz neon no texto dependendo da direção.
 
-- [] value == 
+- [ ] value == 
     - proposeValue(nome da variável root) ---> cria um objeto que guarda propriedades pré-estabelecidas.
 
     - searchValue(nome da variável root) ---> executa as animações presentes no objeto. 
@@ -223,22 +223,17 @@
 
 ##  Eventos Assíncronos =
     
-* Eventos assíncronos nada mais são do que eventos que não necessitam de uma condição para ser executado. O melhor exemplo disso é o evento @root, o qual é um evento que permite a inicialização de objetos.
+* Eventos assíncronos nada mais são do que eventos que não necessitam de uma condição para ser executado. O melhor exemplo disso é o evento **@root**, o qual é um evento que permite a inicialização de variáveis.
 
 <pre>
-html {
-    @root {
-        value: proposeValue(--deny-text {
-            text: fall();
-            color: paint();
-        });
-    }
+@root {
+    --deny-text: fadeColor(#000, 600);
 }
 </pre>
 
-<p>O evento (@root) <b>sempre</b> deve estar dentro do <i>elemento html</i>.</p>
+- Outros eventos assíncronos a serem citados:
+    - *@stem* ---> permite a criação de objetos.
 
-- Outros eventos assíncronos podem ser citados:
     - *@media* ---> aplica animações conforme o tamanho da tela do usuário.
 
     - *@import* ---> importa aplicações e outras bibliotecas.
