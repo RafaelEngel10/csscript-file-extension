@@ -1,6 +1,10 @@
 # Oque é o CSScript?
 
-- CSScrip (Cascading Styles Script) é uma linguagem de estilização de animações web, baseado tanto no JavaScript, quanto no CSS. Sua sintaxe imita a da linguagem de estilização CSS e seu interpretador é totalmente baseado em JS.
+- CSScrip (Cascading Styles Script) constitui uma linguagem declarativa voltada à estilização e orquestração de animações, concebida especificamente para o ecossistema de desenvolvimento frontend voltado à Web. Seu principal propósito consiste em proporcionar uma sintaxe expressiva e simplificada para a definição de comportamentos animados tradicionalmente implementados por meio de JavaScript, permitindo ao desenvolvedor descrever transições, transformações e interações visuais de maneira mais intuitiva e coesa.
+
+- Diferenciando-se das abordagens convencionais de estilização e animação, o CSScrip foi projetado para oferecer maior flexibilidade semântica e criativa, possibilitando um nível mais elevado de controle sobre a temporalidade, a fluidez e a composição dos efeitos dinâmicos aplicados à interface. Essa característica confere à linguagem uma notável capacidade de abstrair a complexidade dos mecanismos subjacentes de renderização e execução, ao mesmo tempo em que preserva a legibilidade e a modularidade do código.
+
+- Em suma, o CSScrip propõe-se como uma camada intermediária entre o design declarativo do CSS e a lógica imperativa do JavaScript, consolidando-se como uma solução inovadora para a definição de animações e interações web com ênfase na clareza sintática, extensibilidade e liberdade criativa do desenvolvedor.
 
 
 ## O que há de especial no CSScript?
