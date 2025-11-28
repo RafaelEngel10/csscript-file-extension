@@ -29,13 +29,16 @@ export function runActionOnElements(selector, action) {
       }
     }
     
-    let selected = '';
+    let selected;
     switch (action) {
       case fall || rise || fadeIn || fadeOut || slideIn || slideOut || pop || implode || shake || shiver: 
         selected = textAnimations;
         break;
       case paint || fadeColor || octopusCamo || chameleonCamo:
         selected = colorAnimations;
+        break;
+      default:
+        console.warn(`[CSScript] animação desconhecida: ${animInfo.name}`);
         break;
     }
 
@@ -49,18 +52,14 @@ export function runActionOnElements(selector, action) {
       // Verifica compatibilidade por tipo
         const propType = action.prop.toLowerCase();
 
-        if (!fn) {
-          console.warn(`[CSScript] animação desconhecida: ${animInfo.name}`);
-          continue;
-        }
 
       // Filtra por tipo de propriedade
         if (
-          (propType === 'request' && ['callBack', 'callDismiss'].includes(animInfo.name)) ||
+          //(propType === 'request' && ['callBack', 'callDismiss'].includes(animInfo.name)) ||
           (propType === 'text' && ['fall', 'rise', 'slideIn', 'slideOut', 'fadeIn', 'fadeOut', 'pop', 'implode', 'shake', 'shiver'].includes(animInfo.name)) ||
           (propType === 'color' && ['paint', 'fadeColor', 'chameleonCamo', 'octopusCamo'].includes(animInfo.name)) ||
-          (propType === 'background-color' && ['paint', 'fadeColor', 'chameleonCamo', 'octopusCamo'].includes(animInfo.name)) ||
-          (propType === 'value' && ['searchValue'].includes(animInfo.name))
+          (propType === 'background-color' && ['paint', 'fadeColor', 'chameleonCamo', 'octopusCamo'].includes(animInfo.name)) 
+          //(propType === 'value' && ['searchValue'].includes(animInfo.name))
           //(propType === 'radius' && ['suddenChange'].includes(animInfo.name)) ||
           //(propType === 'gap' && ['bloomGap', 'stagedGapColumn', 'stagedGapRow'].includes(animInfo.name)) ||
           //(propType === 'weight' && ['skinny', 'heavy'].includes(animInfo.name)) 

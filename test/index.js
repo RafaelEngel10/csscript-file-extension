@@ -655,7 +655,7 @@
 
     void el.offsetWidth;
     requestAnimationFrame(() => {
-      el.style.backgroundSize = '300% 300%'; 
+      el.style.backgroundSize = '800% 800%'; 
     });
 
     setTimeout(() => {
@@ -678,7 +678,7 @@
 
     // initial state
     el.style.background = `radial-gradient(circle at center, ${originalColor} 0%, ${finalColor} 60%)`;
-    el.style.backgroundSize = '300% 300%'; 
+    el.style.backgroundSize = '800% 800%'; 
     el.style.backgroundPosition = 'center center';
     el.style.backgroundRepeat = 'no-repeat';
     el.style.webkitBackgroundClip = 'text';
@@ -1071,10 +1071,9 @@
 
   // inicializa assim que o DOM estiver pronto (e garante execução se já carregado)
   if (document.readyState === 'loading') {
-    window.addEventListener('DOMContentLoaded', loadAll);
+    document.addEventListener('DOMContentLoaded', loadAll);
   } else {
-    // já carregado
-    setTimeout(loadAll, 0);
+    loadAll();
   }
 
   // expõe para debug

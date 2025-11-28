@@ -312,10 +312,9 @@ import { removeComments, toMs, ensureInlineBlockIfNeeded, parseAnimString,  mapE
 
   // inicializa assim que o DOM estiver pronto (e garante execução se já carregado)
   if (document.readyState === 'loading') {
-    window.addEventListener('DOMContentLoaded', loadAll);
+    document.addEventListener('DOMContentLoaded', loadAll);
   } else {
-    // já carregado
-    setTimeout(loadAll, 0);
+    loadAll();
   }
 
   // expõe para debug
