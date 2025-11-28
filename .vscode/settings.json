@@ -1,0 +1,5 @@
+{
+    "material-icon-theme-simon.files.associations": {
+        "*.cssc": "../.vscode/extensions/icons/cssc-icon.svg"
+    }
+}

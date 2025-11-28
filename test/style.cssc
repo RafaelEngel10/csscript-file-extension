@@ -1,0 +1,41 @@
+#header-title {
+    window.onLoad {
+        color: chameleonCamo( #8ee7ff, #ff0000, 1000);
+    };
+
+    onSing.click {
+        text: shake(cocktail-shaker, 3px, 300);
+    };
+
+    onDbl.click {
+        text: implode(1.5, 1200);
+    };
+
+    onHold.click {
+        color: fadeColor( #00232cff, 600);
+    };
+}
+
+.card {
+    reveal.onScroll {
+        text: implode(1.5, 600);
+    }
+}
+
+#sobre {
+    reveal.onScroll {
+        text: fadeIn(1000);
+    }
+}
+
+.alert {
+    reveal.onScroll {
+        text: fall(600);
+    }
+}
+
+.important-title {
+    reveal.onScroll {
+        color: fadeColor( #ff0000, #8ee7ff, 2500);
+    }
+}

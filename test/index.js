@@ -1080,5 +1080,3 @@
   // expõe para debug
   window.CSScriptRuntime = { parseCSScript, processCSScriptCode, loadAll };
 })();
-
-

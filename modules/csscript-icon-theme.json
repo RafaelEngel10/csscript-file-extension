@@ -1,0 +1,67 @@
+{
+  "iconDefinitions": {
+    "_file_cssc": {
+      "iconPath": "./icons/cssc-logo.png"
+    },
+    "_file_html": {
+      "iconPath": "./icons/html-logo.png"
+    },
+    "_file_css": {
+      "iconPath": "./icons/css-logo.png"
+    },
+    "_file_java": {
+      "iconPath": "./icons/java-logo.png"
+    },
+    "_file_js": {
+      "iconPath": "./icons/js-logo.png"
+    },
+    "_file_json": {
+      "iconPath": "./icons/json-logo.png"
+    },
+    "_file_c_lang": {
+      "iconPath": "./icons/c-lang-logo.png"
+    },
+    "_file_cpp": {
+      "iconPath": "./icons/cpp-logo.png"
+    },
+    "_file_csharp": {
+      "iconPath": "./icons/csharp-logo.png"
+    },
+    "_file_git": {
+      "iconPath": "./icons/git-logo.png"
+    },
+    "_file_php": {
+      "iconPath": "./icons/php-logo.png"
+    },
+    "_file_python": {
+      "iconPath": "./icons/python-logo.png"
+    },  
+    "_file_cmoney": {
+      "iconPath": "./icons/cmoney-logo.png"
+    }
+  },
+  "fileExtensions": {
+    "cssc": "_file_cssc",
+    "html": "_file_html",
+    "css": "_file_css",
+    "java": "_file_java",
+    "js": "_file_js",
+    "json": "_file_json",
+    "cs": "_file_csharp",
+    "cpp": "_file_cpp",
+    "c": "_file_c_lang",
+    "php": "_file_php",
+    "python": "_file_python",
+    "py": "_file_python",
+    "git": "_file_git",
+    "gitignore": "_file_git",
+    "cd": "_file_cmoney",
+    "cmoney": "_file_cmoney",
+
+  },
+  "languageIds": {
+    "csscript": "_file_cssc"
+  },
+  "folder": "_folder",
+  "folderExpanded": "_folder"
+}
