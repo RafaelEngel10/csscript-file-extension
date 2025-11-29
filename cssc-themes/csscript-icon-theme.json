@@ -38,6 +38,12 @@
     },  
     "_file_cmoney": {
       "iconPath": "./icons/cmoney-logo.png"
+    },
+    "_file_sql": {
+      "iconPath": "./icons/sql-logo.png"
+    },
+    "_file_rust": {
+      "iconPath": "./icons/rust-logo.png"
     }
   },
   "fileExtensions": {
@@ -57,7 +63,8 @@
     "gitignore": "_file_git",
     "cd": "_file_cmoney",
     "cmoney": "_file_cmoney",
-
+    "rs": "_file_rust",
+    "sql": "_file_sql",
   },
   "languageIds": {
     "csscript": "_file_cssc"

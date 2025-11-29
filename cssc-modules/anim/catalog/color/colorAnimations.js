@@ -22,6 +22,7 @@ export const colorAnimations = {
     });
   },
 
+
   paint: (el, arg) => {
     // Sintax: paint(direction, finalColor, duration)
     // Ex: paint(left, #ff0000, 1200ms)
@@ -66,7 +67,7 @@ export const colorAnimations = {
     el.style.transition = 'none';
     el.style.backgroundImage = `linear-gradient(${gradientDirection}, ${finalColor} 0%, ${finalColor} 50%, ${initialColor} 50%, ${initialColor} 100%)`;
     el.style.backgroundRepeat = 'no-repeat';
-    el.style.backgroundSize = '200% 200%';
+    el.style.backgroundSize = '300% 300%';
     el.style.backgroundPosition = startPos;
     el.style.webkitBackgroundClip = 'text';
     el.style.backgroundClip = 'text';
@@ -121,7 +122,7 @@ export const colorAnimations = {
 
     void el.offsetWidth;
     requestAnimationFrame(() => {
-      el.style.backgroundSize = '300% 300%'; 
+      el.style.backgroundSize = '800% 800%'; 
     });
 
     setTimeout(() => {
@@ -130,6 +131,7 @@ export const colorAnimations = {
       el.style.webkitTextFillColor = '';
     }, duration + 50);
   },
+
 
   octopusCamo: (el, arg) => {
     // Sintax: octopusCamo(originalColor, finalColor, duration)
@@ -144,7 +146,7 @@ export const colorAnimations = {
 
     // initial state
     el.style.background = `radial-gradient(circle at center, ${originalColor} 0%, ${finalColor} 60%)`;
-    el.style.backgroundSize = '300% 300%'; 
+    el.style.backgroundSize = '800% 800%'; 
     el.style.backgroundPosition = 'center center';
     el.style.backgroundRepeat = 'no-repeat';
     el.style.webkitBackgroundClip = 'text';
@@ -163,4 +165,7 @@ export const colorAnimations = {
       el.style.webkitTextFillColor = '';
     }, duration + 50);
   },
+
+
+
 }

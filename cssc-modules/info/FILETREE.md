@@ -1,7 +1,7 @@
-# File Tree: csscript-vscode
+# File Tree: cssc-modules
 
-**Generated:** 11/28/2025, 5:12:09 PM
-**Root Path:** `c:\Users\Usuario\Documents\rafael\projeto\csscript-vscode`
+**Generated:** 11/29/2025, 12:44:30 PM
+**Root Path:** `c:\Users\Usuario\Documents\rafael\projeto\csscript-vscode\cssc-modules`
 
 ```
 ├── 📁 anim
@@ -21,38 +21,18 @@
 │       └── 📄 reverseAnimations.js
 ├── 📁 app
 │   └── 📄 runActionOnElements.js
-├── 📁 icons
-│   ├── 🖼️ c-lang-logo.png
-│   ├── 🖼️ cmoney-logo.png
-│   ├── 🖼️ cpp-logo.png
-│   ├── 🖼️ csharp-logo.png
-│   ├── 🖼️ css-logo.png
-│   ├── 🖼️ cssc-icon.png
-│   ├── 🖼️ cssc-logo.png
-│   ├── 🖼️ git-logo.png
-│   ├── 🖼️ html-logo.png
-│   ├── 🖼️ java-logo.png
-│   ├── 🖼️ js-logo.png
-│   ├── 🖼️ json-logo.png
-│   ├── 🖼️ php-logo.png
-│   ├── 🖼️ python-logo.png
-│   ├── 🖼️ rust-logo.png
-│   └── 🖼️ sql-logo.png
 ├── 📁 info
 │   └── 📝 REMINDER.md
 ├── 📁 syntaxes
 │   └── ⚙️ csscript.tmLanguage.json
-├── 📁 themes
-│   └── ⚙️ csscript-color-theme.json
 ├── 📝 README.md
 ├── 📄 basics.js
-├── ⚙️ csscript-icon-theme.json
 ├── 📄 csscript.js
+├── 📄 handler.js
 ├── ⚙️ language-configuration.json
 ├── ⚙️ package-lock.json
 ├── ⚙️ package.json
-├── 📄 parse.js
-└── 📄 style.cssc
+└── 📄 parse.js
 ```
 
 ---
